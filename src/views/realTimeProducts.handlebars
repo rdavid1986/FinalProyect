@@ -1,0 +1,45 @@
+<h1 class="h1__realtimeproducts">
+    All products ready at realTimeProducts.handlebars !!!
+</h1>
+<a href="/api/session/logout"><button id="logout_button">Logout</button></a>
+        <a href='/profile' ><button class="button">Profile</button></A>
+<div class="div__forms">
+    <div class="div__addProduct">
+        <div id="errorMessage" style="color: red;"></div>
+        <h2 class="h2add__product">Add Product</h2>
+        <form id="form" action="submit()" method="POST">
+            <label>title:</label>
+            <input name="title" id="title" />
+            <label>description:</label>
+            <input name="description" id="description" />
+            <label>Category:</label>
+            <input name="category" id="category" />
+            <label>price:</label>
+            <input name="price" id="price" />
+            <label>thumbnail:</label>
+            <input type="file" name="thumbnail" id="thumbnail" />
+            <label>code:</label>
+            <input name="code" id="code" />
+            <label>stock:</label>
+            <input name="stock" id="stock" />
+
+            <input type="submit" id="submit" />
+        </form>
+    </div>
+    <div class="div__deleteProduct">
+        <h3 class="h1__deleteProduct">Delete Product</h3>
+        <div id="errorMessageEmpty" style="color: red;"></div>
+        <div id="errorMessageDelete" style="color: red;"></div>
+        <form class="deleteForm" id="deleteForm" method="DELETE">
+            <label>Enter the ID of the product do you want to delete</label>
+            <input name="id" id="id" />
+
+            <button type="submit" id="submitDelete">Delete product</button>
+        </form>
+    </div>
+
+</div>
+<ul class="ul__productsList" id="productsUl">
+</ul>
+<script src="/socket.io/socket.io.js"></script>
+<script src="/js/realTimeProducts.js"></script>

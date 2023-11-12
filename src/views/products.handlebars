@@ -1,0 +1,62 @@
+<div class="header">
+    <h1 class="h1Products">
+    Welcome {{user.role}} {{user.first_name}} these are the products available 
+    </h1>
+    <div class="buttons">
+        <a href="/api/session/logout"><button id="logout_button">Logout</button></a>
+        <a href='/profile' ><button class="button">Profile</button></A>
+        <a href='/cart/{{user.cart}}' ><button class="button">Cart</button></A>
+    </div>
+</div>
+
+{{#if docs}}
+  <ul id="productsUl" class="ul__productsList">
+    {{#each docs}}
+      <li style="margin: 20px;">
+        <strong>Title:</strong> {{this.title}}
+        <br>
+        <strong>Description:</strong> {{this.description}}
+        <br>
+        <strong>Category:</strong> {{this.category}}
+        <br>
+        <strong>Price:</strong> {{this.price}}
+        <br>
+        <strong>Thumbnail:</strong> {{this.thumbnail}}
+        <br>
+        <strong>Code:</strong> {{this.code}}
+        <br>
+        <strong>Stock:</strong> {{this.stock}}
+        <br>
+        
+        <a
+          class='addButton'
+          data-cid='{{user.cart}}'
+          data-pid='{{this.id}}'>
+          <button>Add to cart</button>
+        </a>
+        
+      </li>
+
+      
+    {{/each}}
+    
+  </ul>
+{{else}}
+  <p class="ul__productsList">Products not found.</p>
+{{/if}}
+<div class="div_pages">
+  {{#if hasPrevPage}}
+  <a href='/products?page={{prevPage}}'><button>Anterior</button></A>
+  {{/if}}
+  <p>actual page : {{page}}</p>
+  <p>total paging Counter : {{pagingCounter}}</p>
+  <p>total pages : {{totalPages}}</p>
+  {{#if hasNextPage}}
+  <a href="/products?page={{nextPage}}"><button>Siguiente</button></A>
+  {{/if}}
+</div>
+
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="/socket.io/socket.io.js"></script>
+<script src="/js/index.js"></script>
+<script src="/js/products.js"></script>

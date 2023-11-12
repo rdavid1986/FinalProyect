@@ -1,0 +1,17 @@
+<div class="profile">
+    <div class="profile_div">
+        <h1>Your profile (no sensitive data)</h1>
+        <p>Name: {{user.first_name}}</p>
+        <p>email: {{user.email}}</p>
+        <p>role: {{user.role}}</p>
+    </div>
+    <div>
+        <a href="/api/session/logout"><button id="logout_button">Logout</button></a>
+        <a href='/cart/{{user.cart}}' ><button class="button">Cart</button></A>
+        <a href='/products' ><button class="button">Shop</button></A>
+    </div>
+</div>
+
+<script src="/socket.io/socket.io.js"></script>
+<script src="/js/index.js"></script>
+<script src="/js/products.js"></script>

@@ -1,0 +1,121 @@
+[
+    {
+        "title": "tv",
+        "description": "tv 4k 50",
+        "catetgory": "tv",
+        "price": 500,
+        "thumbnail": [],
+        "code": "asd123",
+        "stock": 20,
+        "status": true,
+        "id": 1
+    },
+    {
+        "title": "smart tv",
+        "description": "tv 4k 55",
+        "catetgory": "tv",
+        "price": 600,
+        "thumbnail": [],
+        "code": "qwe123",
+        "stock": 20,
+        "status": true,
+        "id": 2
+    },
+    {
+        "title": "xbox series x limited edition forza motorsport 7",
+        "description": "video game console",
+        "catetgory": "video games",
+        "price": 500,
+        "thumbnail": [],
+        "code": "zxc123",
+        "stock": 20,
+        "status": true,
+        "id": 3
+    },
+    {
+        "title": "ps5 limited edition spiderman 2",
+        "description": "video game console",
+        "catetgory": "video games",
+        "price": 600,
+        "thumbnail": [],
+        "code": "fgh123",
+        "stock": 20,
+        "status": true,
+        "id": 4
+    },
+    {
+        "title": "tv",
+        "description": "tv 4k 32",
+        "catetgory": "tv",
+        "price": 300,
+        "thumbnail": [],
+        "code": "aaa123",
+        "stock": 20,
+        "status": true,
+        "id": 5
+    },
+    {
+        "title": "smart tv",
+        "description": "tv 4k 40",
+        "catetgory": "tv",
+        "price": 400,
+        "thumbnail": [],
+        "code": "sss222",
+        "stock": 20,
+        "status": true,
+        "id": 6
+    },
+    {
+        "title": "xbox series s",
+        "description": "video game console",
+        "catetgory": "video games",
+        "price": 400,
+        "thumbnail": [],
+        "code": "fff333",
+        "stock": 20,
+        "status": true,
+        "id": 7
+    },
+    {
+        "title": "ps5 digital",
+        "description": "video game console",
+        "catetgory": "video games",
+        "price": 500,
+        "thumbnail": [],
+        "code": "hhh555",
+        "stock": 10,
+        "status": true,
+        "id": 8
+    },
+    {
+        "title": "ps5 dualsense",
+        "description": "video game controller",
+        "catetgory": "video games",
+        "price": 100,
+        "thumbnail": [],
+        "code": "jjj777",
+        "stock": 10,
+        "status": true,
+        "id": 9
+    },
+    {
+        "title": "Xbox series x/s controller",
+        "description": "video game controller",
+        "price": 100,
+        "thumbnail": [],
+        "code": "kkk888",
+        "stock": 10,
+        "id": 10
+    },
+    {
+        "title": "polystation5",
+        "description": "video game console",
+        "category": "video games",
+        "price": 60,
+        "thumbnail": [],
+        "code": "2323223323",
+        "stock": 20,
+        "status": true,
+        "id": 11
+    }
+]

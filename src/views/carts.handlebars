@@ -1,0 +1,40 @@
+<h1 class="h1Products">
+  Cart 
+</h1>
+<div class="buttons">
+        <a href="/api/session/logout"><button id="logout_button">Logout</button></a>
+        <a href='/profile' ><button class="button">Profile</button></A>
+        <a href='/products' ><button class="button">Shop</button></A>
+    </div>
+
+{{#if products}}
+  <ul id="productsUl" class="ul__productsList">
+    {{#each products}}
+      <li style="margin: 20px;">
+        <strong>Title:</strong> {{lookup _id "title"}}
+        <br>
+        <strong>Description:</strong> {{lookup _id "description"}}
+        <br>
+        <strong>Category:</strong> {{lookup _id "category"}}
+        <br>
+        <strong>Price:</strong> {{lookup _id "price"}}
+        <br>
+        <strong>Thumbnail:</strong> {{lookup _id "thumbnail"}}
+        <br>
+        <strong>Code:</strong> {{lookup _id "code"}}
+        <br>
+        <strong>Stock:</strong> {{lookup _id "stock"}}
+        <br>
+        <br>
+        <strong>quantity:</strong> {{quantity}}
+        <br>
+      </li>
+    {{/each}}
+  </ul>
+{{else}}
+  <p class="ul__productsList">Cart is empty.</p>
+{{/if}}
+  <a href=""><button id="delete_cart" class="delete_cart" data-cid="{{cart}}">Delete cart</button></a>
+  <a href="/api/carts/{{cart}}/purchase"><button id="buyButton" class="buyButton" >Purchase</button></a>
+<script src="/js/cart.js"></script>
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>

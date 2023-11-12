@@ -1,0 +1,20 @@
+<div class="login">
+    <form id="loginForm">
+        <h2>Login</h2>
+        <label for="email">Email:</label>
+        <input id="email" name="email" />
+        <br />
+        <label for="password">Password:</label>
+        <input id="password" type="password" />
+        <br />
+        <input type="submit" class="submit"/>
+
+    <p class="register">You are not register? <a href="/register">Register</a></p>
+    <p class="resetPassword">Forgot your password? <a href="/resetPassword">Restore your password</a></p>
+    </form>
+    <div className="loginGithub">
+        <a href="/api/session/github"><button>Login with github</button>
+    </div>
+</div>
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="/js/login.js"></script>

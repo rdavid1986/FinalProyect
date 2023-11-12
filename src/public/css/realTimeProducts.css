@@ -1,0 +1,101 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+body {
+    background-color: black;
+    height: 100%;
+}
+.h1__realtimeproducts{
+    margin:20px;
+    color: white;
+    text-align: center;
+}
+.div__addProduct {
+    color: white;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    justify-content: center;
+}
+
+.h1__deleteProduct {
+    color: red;
+}
+.h2add__product {
+    color: green;
+}
+
+.div__forms {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    
+}
+#form {
+    max-width: 400px;
+    height: 163px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    margin-right: 150px;
+    flex-wrap: wrap;
+    
+}
+#form input {
+    max-width: 100px;
+    margin: 0 10px;
+}
+.deleteForm {
+    margin: 0 10px;
+    color: white;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+.div__deleteProduct {
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+    justify-content: center;
+    align-items: center;
+    max-width: 200px;
+}
+.div__deleteProduct input {
+    width: 100px;
+    color:black;
+}
+.ul__productsList {
+    list-style: none;
+    display: flex;
+    list-style-image: initial;
+    color: rgb(232, 230, 227);
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    align-items: stretch;
+    
+}
+.ul__productsList button {
+    color: green;
+}
+.ul__productsList li {
+    color: rgb(206, 199, 199);
+    padding: 20px;
+    width: 180px;
+    height: auto;
+    text-align: center;
+    border-radius: 26px;
+    background: linear-gradient(145deg, #191919, #1e1e1e);
+    box-shadow: 26px 26px 52px #1a1a1a, -26px -26px 52px #1e1e1e;
+}
+.h1Products {
+    color: white;
+    padding : 50px;
+}
+.div_pages {
+    color : white;
+}
