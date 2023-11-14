@@ -10,30 +10,29 @@ const productManager = new ProductManager();
 //Get products /api/products
 export const getProducts = async (req, res) => {
     let products = await productManager.get();
-    req.logger.warn("alert");
-    req.logger.info("status: success")
     res.status(200).send({ status: "success", payload: products })
 };
 //Create a product /api/products
 export const addProduct = async (req, res) => {
     try {
-        
+
         //Create a product
         const productDTO = new productsDTO(req.body)
         const { title, description, category, code, price, stock } = productDTO
         if (!title || !description || !category || !code || !price || !stock) {
             CustomError.createError({
-               name: "Product creation error",
-               cause: generateProductErrorInfo({ title, description, category, code, price, stock }),
-               message: "Error triying to create Product",
-               code: EErrors.INVALID_TYPES_ERROR
-           })
-       }
+                name: "Product creation error",
+                cause: generateProductErrorInfo({ title, description, category, code, price, stock }),
+                message: "Error triying to create Product",
+                code: EErrors.INVALID_TYPES_ERROR
+            })
+        }
         const product = await productManager.add(productDTO);
         //responnse
         return res.status(200).send({ status: "success", payload: product });
     } catch (error) {
-        return res.send({ status: "error", error:` ${error.name}: ${error.cause},${error.message},${error.code}` });
+        req.logger.error("error");
+        return res.send({ status: "error", error: ` ${error.name}: ${error.cause},${error.message},${error.code}` });
     }
 };
 //rute /product?limit get limited product list default in 5 products or the amount of you choose
@@ -46,8 +45,12 @@ export const paginateProducts = async (req, res) => {
 export const getProductsById = async (req, res) => {
     const id = req.params.pid;
     const products = await productManager.getById(id);
-    if (products) res.status(200).send({ status: "success", payload: products });
-    else res.send(`Error  404 : products not found with id : ${id}`);
+    if (products) {
+        res.status(200).send({ status: "success", payload: products });
+    } else {
+        req.logger.error("error");
+        res.send(`Error  404 : products not found with id : ${id}`);
+    }
 };
 //Update product /api/products/pid
 export const updateProduct = async (req, res) => {

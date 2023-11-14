@@ -32,12 +32,14 @@ export const login = async (req, res) => {
     }
 };
 export const failLogin = (req, res) => {
+    req.logger.error("error Failed login");
     res.status(400).send({ error: "Failed login" });
 };
 export const register = async (req, res) => {
     res.send({ status: "success", message: "User register" })
 };
 export const failRegister = async (req, res) => {
+    req.logger.error("error Register Failed");
     res.send({ error: "Register Failed" })
 };
 export const logout = async (req, res) => {
@@ -46,6 +48,7 @@ export const logout = async (req, res) => {
             res.redirect("/");
             
         } else {
+            req.logger.error("Logout Error");
             res.send({ status: 'Logout ERROR', body: error });
         }
     })
@@ -61,12 +64,14 @@ export const restarPassword = async (req, res) => {
         }
         const user = await userModel.findOne({ email });
         if (!user) {
+            req.logger.error("error non-existent user");
             return res.status(404).send({ status: "error", error: "non-existent user" })
         }
         await userModel.updateOne({ email }, { $set: { password: createHash(password)} });
         
         return res.status(200).send({ status: "success", message: "updated password successfully" })
     } catch (error) {
+        req.logger.error("Error to update password");
         return res.send({ error: "error", message: "Error to update password" })
         
     }
@@ -94,6 +99,7 @@ export const current = async (req, res) => {
         }
         res.send(req.session.user)
     } else {
+        req.logger.warn("You are not logged in");
         res.send({ status: "error", message: "You are not logged in" })
     }
 }

@@ -91,8 +91,6 @@ socketServer.on("connection", async (socket) => {
     socket.emit("event_socket", "This message is only for socket");
     socket.broadcast.emit("Event_all_but_current_one", "This message is for everyone except the one making the request");
     socketServer.emit("It_is_received_by_all_clients", "It is received by all clients");
-
-    console.log("client connected");
     const products = await productsManager.get();
     socketServer.emit("serverProducts", products);
 

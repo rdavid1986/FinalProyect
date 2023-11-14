@@ -10,6 +10,7 @@ export const getMessages = async (req, res) => {
         res.send({status: 'success', payload: messages});
     }catch(error){
         console.log('Error de conexion');
+        req.logger.error("error");
     }
 }
 export const addMessages = async (req, res) => {
@@ -19,6 +20,7 @@ export const addMessages = async (req, res) => {
         //Response
         return res.send({status: "success", payload:messages});
     } catch (error) {
+        req.logger.error("error");
         return res.send({status: "error", error: "Duplicated code. Select another code" });
     }
 }

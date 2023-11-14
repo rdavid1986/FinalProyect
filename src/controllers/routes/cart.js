@@ -21,7 +21,8 @@ export const addCart = async (req, res) => {
         const newCart = await cartsManager.add();
         res.send({ status: "success cart added", payload: newCart })
     } catch (error) {
-        res.send({ status: "error", payload: error })
+        res.send({ status: "error", payload: error });
+        req.logger.error("error");
     }
 
 };
