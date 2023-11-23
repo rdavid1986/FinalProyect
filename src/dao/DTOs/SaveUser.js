@@ -9,6 +9,7 @@ export default class SaveUserDTO {
         this.password = user.password;
         this.role = user.role;
         this.cart = user.cart;
+        this.premium = user.premium;
         this.active = true;
     }
 }

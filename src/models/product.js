@@ -37,9 +37,11 @@ const productSchema = new mongoose.Schema({
         type: Boolean, 
         default: true,
     },
+    owner: String,
     active: Boolean
 });
- 
+
+
 productSchema.index({ title: 'text', description: 'text', category: 'text' });
 
 productSchema.plugin(mongoosePaginate);

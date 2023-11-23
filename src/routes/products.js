@@ -9,16 +9,16 @@ import {
 }from "../controllers/routes/products.js";
 import {
     adminAccess,
-    userAccess
-} from "../controllers/routes/accessMiddleware.js"
-import {addLogger} from "../logger.js"
+    userAccess,
+    premiumAccess
+} from "../middleware/auth.js"
 
 const router = new Router();
 
-router.get("/", userAccess, getProducts);
+router.get("/", adminAccess , userAccess, getProducts);
 router.post('/', adminAccess, addProduct)
-router.get('/', paginateProducts);
-router.get('/:pid', getProductsById);
+router.get('/', adminAccess , userAccess, paginateProducts);
+router.get('/:pid', adminAccess , userAccess, getProductsById);
 router.put("/:pid", adminAccess, updateProduct);
 router.delete("/:pid", adminAccess, deleteProduct);
 

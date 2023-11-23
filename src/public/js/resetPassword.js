@@ -1,26 +1,5 @@
 const form = document.getElementById('resetPasswordFrom');
 
-/* form.addEventListener('submit', async evt => {
-    evt.preventDefault();
-    const data = new FormData(form);
-    console.log({ ...data }, "form reste password line 6");
-    const obj = {};
-    data.forEach((value, key) => obj[key] = value);
-    const result = await fetch('api/session/restartPassword', {
-        method: 'POST',
-        body: JSON.stringify(obj),
-        headers: {
-            'content-type': 'application/json'
-        }
-
-    }).then(result => {
-        if (result.status === 200) {
-            console.log("password restored");
-        }
-    });
-    
-    console.log(result, "result");
-}) */
 form.addEventListener('submit', async (evt) => {
     evt.preventDefault();
     const email = document.getElementById('email').value;

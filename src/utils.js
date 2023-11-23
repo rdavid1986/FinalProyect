@@ -16,7 +16,6 @@ export const generateMocking = async () => {
     for(let i= 0; i< 100; i++){
         products.push(generateProduct());
     }
-    console.log("util creaste products",products)
     return products;
 }
 

@@ -2,9 +2,6 @@ import { userModel } from "../../models/user.js";
 import config from "../../config/config.js";
 import { createHash } from '../../utils.js'
 
-
-
-
 const adminName = config.adminName
 
 export const login = async (req, res) => {
@@ -43,21 +40,25 @@ export const failRegister = async (req, res) => {
     res.send({ error: "Register Failed" })
 };
 export const logout = async (req, res) => {
-    req.session.destroy(error => {
-        if (!error) {
-            res.redirect("/");
-            
-        } else {
-            req.logger.error("Logout Error");
-            res.send({ status: 'Logout ERROR', body: error });
-        }
-    })
-    console.log("logout succes");
+    try {
+        req.session.destroy(error => {
+            if (!error) {
+                req.logger.info("Logout success");
+                res.redirect("/");
+            } else {
+                req.logger.error("Logout Error", error);
+                res.status(500).send({ status: 'Logout ERROR', body: error });
+            }
+        });
+    } catch (error) {
+        req.logger.error(`Controller session line 63 ${error.message}, ${error.code}`);
+        res.status(500).send({ status: "error", error: `${error.name}: ${error.cause},${error.message},${error.code}` });
+    }
 };
+
+
 export const restarPassword = async (req, res) => {
     const { email, password } = req.body;
-    console.log("pass", password)
-    console.log("email", email);
     try {
         if (!email || !password) {
             return res.status(400).send({ status: "error", error: "Imcomplete data" })
@@ -67,39 +68,52 @@ export const restarPassword = async (req, res) => {
             req.logger.error("error non-existent user");
             return res.status(404).send({ status: "error", error: "non-existent user" })
         }
-        await userModel.updateOne({ email }, { $set: { password: createHash(password)} });
-        
+        await userModel.updateOne({ email }, { $set: { password: createHash(password) } });
+    
         return res.status(200).send({ status: "success", message: "updated password successfully" })
     } catch (error) {
-        req.logger.error("Error to update password");
-        return res.send({ error: "error", message: "Error to update password" })
-        
+        req.logger.error(`Controller session line 77 ${error.message}, ${error.code}`);
+        res.status(500).send({ status: "error", error: `${error.name}: ${error.cause},${error.message},${error.code}` });
     }
+    
 };
 export const github = async (req, res) => {
-    req.session.user = req.user;
-    res.redirect('/products')
+    try {
+        req.session.user = req.user;
+        res.redirect('/products')
+    } catch (error) {
+        req.logger.error(`Controller session line 87 ${error.message}, ${error.code}`);
+        res.status(500).send({ status: "error", error: `${error.name}: ${error.cause},${error.message},${error.code}` });
+    }
 };
 export const current = async (req, res) => {
-    if(req.user.email === config.adminName) {
-        req.session.user = {
-        email: req.user.email,
-        role: "admin",
+    try {
+        if (req.user.email === config.adminName) {
+            req.session.user = {
+                email: req.user.email,
+                role: "admin",
+            }
+            res.send(req.session.user)
+        } else if (req.session.user) {
+            req.session.user = {
+                first_name: req.user.first_name,
+                last_name: req.user.last_name,
+                full_name: req.user.full_name,
+                age: req.user.age,
+                email: req.user.email,
+                cart: req.user.cart,
+                role: req.user.role,
+                premium: req.user.premium,
+                _id: req.user._id,
+            }
+            res.send(req.session.user)
+        } else {
+            req.logger.warn("You are not logged in");
+            res.send({ status: "error", message: "You are not logged in" })
         }
-        res.send(req.session.user)
-    }else if (req.session.user) {
-        req.session.user = {
-            first_name: req.user.first_name,
-            last_name: req.user.last_name,
-            full_name: req.user.full_name,
-            age: req.user.age,
-            email: req.user.email,
-            cart: req.user.cart,
-            role: req.user.role,
-        }
-        res.send(req.session.user)
-    } else {
-        req.logger.warn("You are not logged in");
-        res.send({ status: "error", message: "You are not logged in" })
+    } catch (error) {
+        req.logger.error(`Controller session line 117 ${error.message}, ${error.code}`);
+        res.status(500).send({ status: "error", error: `${error.name}: ${error.cause},${error.message},${error.code}` });
     }
+    
 }

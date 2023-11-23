@@ -3,7 +3,10 @@ import { cartsModel } from "../../models/cart.js"
 export default class MongoCartManager {
     constructor() {
     }
-
+    get = async () => {
+        const cart = await cartsModel.find();
+        return cart;
+    }
     getById = async (id) => {
         const cart = await cartsModel.findOne({ _id: id }).lean();
         return cart;
@@ -77,13 +80,7 @@ export default class MongoCartManager {
     }
     async deleteProducts(cid) {
         try {
-            const updatedCart = await cartsModel.findByIdAndUpdate(
-                cid,
-                {
-                    $set: { products: [] }
-                },
-                { new: true }
-            );
+            const updatedCart = await cartsModel.findByIdAndUpdate(cid,{$set: { products: [] }},{ new: true });
             return updatedCart;
         } catch (error) {
             return { error: error.message };

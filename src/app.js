@@ -8,10 +8,13 @@ import messagesRouter from "../src/routes/messages.js";
 import cartsRouter from "../src/routes/carts.js";
 import viewsRouter from "../src/routes/views.js";
 import sessionRouter from "../src/routes/session.js";
+import usersRouter from "../src/routes/users.js";
 import mockingRouter from "../src/routes/mocking.js";
 import ProductsManager from "./dao/mongo/productManager.js";
 import MessageManager from "./dao/mongo/messagesManager.js"
 import loggerTestRouter from "../src/routes/loggerTest.js";
+import restorePasswordRouter from "../src/routes/restorePassword.js";
+import mailToRestorePasswordRouter from "../src/routes/mailToRestorePassword.js";
 import mongoose from "mongoose";
 import MongoStore from "connect-mongo";
 import session from 'express-session';
@@ -62,7 +65,10 @@ app.use('/api/products', productsRouter);
 app.use('/api/carts', cartsRouter);
 app.use('/api/chat', messagesRouter);
 app.use('/api/session', sessionRouter);
+app.use('/api/users', usersRouter);
 app.use('/api/mocking', mockingRouter);
+app.use('/api/restorePassword', restorePasswordRouter);
+app.use('/api/mailToRestorePassword', mailToRestorePasswordRouter);
 app.use('/', viewsRouter);
 
 app.engine("handlebars", handlebars.engine());

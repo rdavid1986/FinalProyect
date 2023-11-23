@@ -1,5 +1,6 @@
+
 export default class ProductDTO {
-    constructor(product) {
+    constructor(product, user) {
         this.title = product.title,
         this.description = product.description,
         this.code = product.code,
@@ -8,5 +9,7 @@ export default class ProductDTO {
         this.price = product.price > 0 ? product.price : 0,
         this.category = product.category,
         this.active = true;
+        this.owner = user.premium === "true" ? user._id : "admin";
     }
+    
 }

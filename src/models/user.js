@@ -11,10 +11,13 @@ const userSchema = new mongoose.Schema({
         unique: true,
     },
     age: Number,
-    userName: String, // login with GitHub username
-    password: String, // hash in config passport
+    userName: String, 
+    password: String, 
     role: String,
-
+    premium: {
+        type: String,
+        default: "false",
+    }, 
     cart: {
         type: [
             {
@@ -24,7 +27,8 @@ const userSchema = new mongoose.Schema({
         ],
         default: []
     },
-    active: Boolean
+    active: Boolean,
+    recoverToken: String,
 })
 userSchema.pre("find", function (next) {
     this.populate("cart._id");

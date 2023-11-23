@@ -24,3 +24,53 @@ warn: warn
 fatal: fatal
 error: error
 warn: warn
+error: Error to update password
+error: Error to update password
+error: Error to update password
+error: Error to update password
+error: Error to update password
+error: Error to update password
+error: Error to update password
+error: Error to update password
+error: Error to update password
+error: Error to update password
+error: New passwords don't match
+error: New passwords don't match
+error: The password must be different from the previous one
+error: New passwords don't match
+error: The password must be different from the previous one
+error: error
+error:  ReferenceError: undefined,product is not defined,undefined
+error:  product is not defined,undefined
+error:  product is not defined, undefined
+error:  owner is not defined, undefined
+error:  owner is not defined, undefined
+error:  E11000 duplicate key error collection: ecommerce.products index: code_1 dup key: { code: "AMIGO" }, 11000
+error: linea 38 controller products product is not defined, undefined
+error: linea 38 controller products product is not defined, undefined
+error: linea 38 controller products product is not defined, undefined
+error: linea 38 controller products product is not defined, undefined
+error: linea 38 controller products product is not defined, undefined
+error: linea 38 controller products product is not defined, undefined
+error: linea 38 controller products product is not defined, undefined
+error: linea 38 controller products product is not defined, undefined
+error: linea 38 controller products E11000 duplicate key error collection: ecommerce.products index: code_1 dup key: { code: "AMIGO" }, 11000
+error: linea 38 controller products E11000 duplicate key error collection: ecommerce.products index: code_1 dup key: { code: "AMIGO" }, 11000
+error: linea 38 controller products product is not defined, undefined
+error: linea 38 controller products product is not defined, undefined
+error: controller products line 55  product is not defined, undefined
+error: controller products line 55  E11000 duplicate key error collection: ecommerce.products index: code_1 dup key: { code: "AMIGO" }, 11000
+error: controller products line 55  productDTO.push is not a function, undefined
+error: controller products line 55  owner.push is not a function, undefined
+error: controller products line 55  user is not defined, undefined
+error: controller products line 84  Cannot set headers after they are sent to the client, ERR_HTTP_HEADERS_SENT
+error: Logout Error
+error: Logout Error
+error: controller products line 55  req.logger.error.info is not a function, undefined
+error: Logout Error
+error: controller products line 55  req.logger.error.info is not a function, undefined
+error: Logout Error
+error: controller session line 63  CustomError is not defined, undefined
+error: Logout Error
+error: Controller session line 63 CustomError is not defined, undefined
+error: Logout Error Cannot set headers after they are sent to the client {"code":"ERR_HTTP_HEADERS_SENT","stack":"Error [ERR_HTTP_HEADERS_SENT]: Cannot set headers after they are sent to the client\n    at new NodeError (node:internal/errors:399:5)\n    at ServerResponse.setHeader (node:_http_outgoing:663:11)\n    at ServerResponse.header (C:\\Users\\BANGHO\\Desktop\\mail recover\\node_modules\\express\\lib\\response.js:794:10)\n    at ServerResponse.send (C:\\Users\\BANGHO\\Desktop\\mail recover\\node_modules\\express\\lib\\response.js:174:12)\n    at ServerResponse.json (C:\\Users\\BANGHO\\Desktop\\mail recover\\node_modules\\express\\lib\\response.js:278:15)\n    at ServerResponse.send (C:\\Users\\BANGHO\\Desktop\\mail recover\\node_modules\\express\\lib\\response.js:162:21)\n    at file:///C:/Users/BANGHO/Desktop/mail%20recover/src/controllers/routes/session.js:47:33\n    at C:\\Users\\BANGHO\\Desktop\\mail recover\\node_modules\\connect-mongo\\build\\main\\lib\\MongoStore.js:377:13\n    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)"}

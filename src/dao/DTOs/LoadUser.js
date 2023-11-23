@@ -8,5 +8,6 @@ export default class LoadUserDTO {
         this.userName = user.userName ? user.userName : '';
         this.role = user.role;
         this.cart = user.cart;
+        this.premium = user.premium;
     }
 }
