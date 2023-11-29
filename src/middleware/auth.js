@@ -24,29 +24,62 @@ export const verifyToken = (req,res,next) => {
 }
 
 export const adminAccess = (req, res, next) => {
-    if (req.session.user.email === "adminCoder@coder.com") {
-        console.log("admin access1 si")
-        next();
-    }else if (req.session.user.premium === "true"){
-        console.log("premium access2 premium si")
-        next();
-    }else{
-        console.log("admin access no")
+    try {
+        if (req.session.user.email === "adminCoder@coder.com") {
+            next();
+        }else if (req.session.user.premium === true){
+            next();
+        }
+        
+    } catch (error) {
+        req.logger.error(`Middleware auth.js line 35 ${error.message}, ${error.code}`);
         res.send({status:"failed", message: "You are not allowed to access this"});
     }
 }
 export const userAccess = (req, res, next) => {
-    if (req.session.user.role === "user") {
-        next();
-    }else{
+    try {
+        
+        if (req.session.user.role === "user") {
+            next();
+        }
+    } catch (error) {
+        req.logger.error(`Middleware auth.js line 46 ${error.message}, ${error.code}`);
         res.send({status:"failed", message: "You are not allowed to access this"});
     }
 };
 export const premiumAccess = (req, res, next) => {
-    if (req.session.user.premium === "true") {
-        next();
-    }else{
+    try {
+        
+        if (req.session.user.premium === "true") {
+            next();
+        }
+    } catch (error) {
+        req.logger.error(`Middleware auth.js line 57 ${error.message}, ${error.code}`);
         res.send({status:"failed", message: "You are not allowed to access"});
     }
     
 }
+export const publicAccess = (req, res, next) => {
+    try {
+        if (req.session.user) {
+            return res.redirect('/products');
+        }else {
+            
+        }
+        next();
+    } catch (error) {
+        req.logger.error(`Middleware auth.js line 71 ${error.message}, ${error.code}`);
+        res.status(500).send({ status: "error", error: `${error.name}: ${error.cause},${error.message},${error.code}` });
+    }
+};
+export const privateAccess = (req, res, next) => {
+    try {
+        if (!req.session.user) {
+            return res.status(403).redirect('/');
+        }
+        next();
+    } catch (error) {
+        req.logger.error(`Middleware auth.js line 82 ${error.message}, ${error.code}`);
+        res.status(500).send({ status: "error", error: `${error.name}: ${error.cause},${error.message},${error.code}` });
+    }
+};

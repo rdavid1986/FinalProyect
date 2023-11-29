@@ -15,7 +15,7 @@ import  {
 import {
     adminAccess,
     userAccess
-}from "../controllers/routes/accessMiddleware.js"
+}from "../middleware/auth.js"
 router.post("/", addCart);
 router.get("/", getCarts);
 router.get("/:cid", getCartById);

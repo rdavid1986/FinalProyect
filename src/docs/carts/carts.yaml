@@ -1,0 +1,169 @@
+paths:
+  /api/carts:
+    get:
+      summary: Get the list of carts
+      tags:
+        - Carts
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#components/schemas/Cart'
+    post:
+      summary: Add a new cart
+      tags: 
+        - Carts
+      responses:
+        '201':
+          description: Cart created successfully
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#components/schemas/Cart'
+        '400':
+          description: Bad request
+
+  /api/carts/{cid}:
+    get:
+      summary: Get information about a specific cart
+      tags:
+        - Carts
+      parameters:
+        - in: path
+          name: cid
+          required: true
+          description: Cart ID
+          schema:
+            $type: string
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                  $ref: '#components/schemas/Cart'
+        '404':
+          description: Cart not found
+    
+    
+
+    delete:
+      summary: Delete a cart
+      tags:
+        - carts
+      parameters:
+        - in: path
+          name: cid
+          required: true
+          description: Cart ID
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Cart deleted successfully
+        '404':
+          description: Cart not found
+
+  /api/carts/{cid}/product/{pid}:
+    post:
+      summary: Add a product to a cart
+      tags:
+        - carts
+      parameters:
+        - in: path
+          name: cid
+          required: true
+          description: Cart ID
+          schema:
+            $type: string
+        - in: path
+          name: pid
+          required: true
+          description: Product ID
+          schema:
+            $type: string
+      responses:
+        '201':
+          description: Product added successfully
+          content:
+            application/json:
+              schema:
+                  $ref: '#components/schemas/Cart'
+        '400':
+          description: Bad request
+          
+
+    delete:
+      summary: Remove a product from a cart
+      tags:
+        - Carts
+      parameters:
+        - in: path
+          name: cid
+          required: true
+          description: Cart ID
+          schema:
+            $type: string
+        - in: path
+          name: pid
+          required: true
+          description: Product ID
+          schema:
+            $type: string
+      responses:
+        '200':
+          description: Product removed successfully
+        '404':
+          description: Product or cart not found
+
+  /api/carts/{cid}/purchase:
+    get:
+      summary: Make a purchase from a cart
+      tags:
+        - Carts
+      parameters:
+        - in: path
+          name: cid
+          required: true
+          description: Cart ID
+          schema:
+            $type: string
+      responses:
+        '200':
+          description: Purchase made successfully
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#components/schemas/Cart'
+        '404':
+          description: Cart not found
+
+components:
+  schemas:
+    Cart:
+      type: object
+      properties:
+        products:
+          type: array
+          items:
+            type: object
+            properties:
+              _id:
+                type: string
+                format: uuid
+                description: Product ID in the cart.
+              quantity:
+                type: number
+                description: Quantity of the product in the cart (default is 1).
+          description: List of products in the cart (default is empty).
+      required:
+        - products
+    

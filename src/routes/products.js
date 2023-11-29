@@ -15,10 +15,10 @@ import {
 
 const router = new Router();
 
-router.get("/", adminAccess , userAccess, getProducts);
-router.post('/', adminAccess, addProduct)
-router.get('/', adminAccess , userAccess, paginateProducts);
-router.get('/:pid', adminAccess , userAccess, getProductsById);
+router.get("/", getProducts);
+router.post('/', addProduct)
+router.get('/', paginateProducts);
+router.get('/:pid', getProductsById);
 router.put("/:pid", adminAccess, updateProduct);
 router.delete("/:pid", adminAccess, deleteProduct);
 

@@ -1,6 +1,6 @@
 import {Router} from "express";
 import {mailToRestorePassword} from "../controllers/routes/mailToRestorePassword.js";
-import {adminAccess, userAccess} from "../controllers/routes/accessMiddleware.js"
+import {adminAccess, userAccess} from "../middleware/auth.js"
 
 const router = Router();
 

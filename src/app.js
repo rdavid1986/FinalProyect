@@ -23,6 +23,8 @@ import { initializePassport } from "../src/config/passport.js";
 import config from "./config/config.js";
 import errorHandler from "./controllers/routes/errorsMiddlewares.js";
 import {addLogger} from "./logger.js"
+import swaggerJSDoc from 'swagger-jsdoc'; 
+import swaggerUiExpress from "swagger-ui-express";
 
 
 const app = express();
@@ -31,6 +33,17 @@ const PORT = config.port
 const mongoURL = config.mongoUrl
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
+
+const swaggerOptions = {
+    definition:{
+        openapi:'3.0.1',
+        info:{
+            title:"CoderHouse Ecommerce",
+            description:"API Ecommerce"
+        }
+    },
+    apis:[`${__dirname}/docs/**/*.yaml`]
+}
 
 //connect to mongo
 mongoose.connect(mongoURL, {
@@ -60,6 +73,7 @@ app.use(express.static(`${__dirname}/public`));
 //Configure routes
 app.use(errorHandler);
 app.use(addLogger);
+app.use('/api/docs', swaggerUiExpress.serve,swaggerUiExpress.setup(swaggerJSDoc(swaggerOptions)));
 app.use('/api/loggerTest', loggerTestRouter);
 app.use('/api/products', productsRouter);
 app.use('/api/carts', cartsRouter);

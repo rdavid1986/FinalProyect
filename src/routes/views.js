@@ -1,6 +1,6 @@
 import { Router } from "express";
 import {products,realtimeProducts,chat,cart,login,register,profile,resetPassword,notFound} from "../controllers/routes/views.js";
-import {adminAccess,userAccess,privateAccess,publicAccess}from "../controllers/routes/accessMiddleware.js"
+import {adminAccess,userAccess,privateAccess,publicAccess}from "../middleware/auth.js"
 import {recoverView} from "../controllers/routes/views.js";
 import {restorePassword} from "../controllers/routes/views.js";
 

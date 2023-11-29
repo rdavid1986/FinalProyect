@@ -151,7 +151,7 @@ export const purchase = async (req, res) => {
         const productsToPurchase = [];
         const productsNotPurchased = [];
         let totalPricePurchase = 0;
-        for (const product of products) {
+        for (let product of products) {
             const productInfo = await productManager.getById(product._id);
     
             if (productInfo.stock >= product.quantity) {
