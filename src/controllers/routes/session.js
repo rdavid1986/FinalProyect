@@ -88,6 +88,20 @@ export const github = async (req, res) => {
 };
 export const current = async (req, res) => {
     try {
+        if (req.body.user) {
+            req.body.user = {
+                first_name: req.user.first_name,
+                last_name: req.user.last_name,
+                full_name: req.user.full_name,
+                age: req.user.age,
+                email: req.user.email,
+                cart: req.user.cart,
+                role: req.user.role,
+                premium: req.user.premium,
+                _id: req.user._id,
+            }
+            res.send(req.body.user)
+        }
         if (req.user.email === config.adminName) {
             req.session.user = {
                 email: req.user.email,

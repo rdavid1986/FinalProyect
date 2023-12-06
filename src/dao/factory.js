@@ -28,4 +28,4 @@ switch(config.persistence){
 }
 //No estoy utilizando factory , 
 //igualmente queria tener los archivos en mi proyecto,
-//pero este no esta en una escala como para utilizar factory tal cual dijo el profesor en clase
+//pero este no esta en una escala como para utilizar factory

@@ -82,3 +82,74 @@ error: Middleware auth.js line 35 Cannot read properties of undefined (reading '
 error: Middleware auth.js line 35 Cannot read properties of undefined (reading 'email'), undefined
 error: Middleware auth.js line 35 Cannot read properties of undefined (reading 'email'), undefined
 error: Middleware auth.js line 35 Cannot read properties of undefined (reading 'email'), undefined
+error: controller products line 38  Cannot read properties of undefined (reading 'premium'), undefined
+error: controller products line 38  Cannot read properties of undefined (reading 'premium'), undefined
+error: controller products line 38  Cannot read properties of undefined (reading 'premium'), undefined
+error: controller products line 38  Cannot read properties of undefined (reading 'premium'), undefined
+error: controller products line 38  Cannot read properties of undefined (reading 'premium'), undefined
+error: controller products line 38  Cannot read properties of undefined (reading 'premium'), undefined
+error: controller products line 38  Cannot read properties of undefined (reading 'premium'), undefined
+error: controller products line 38  Cannot read properties of undefined (reading 'premium'), undefined
+error: controller products line 38  Cannot read properties of undefined (reading 'premium'), undefined
+error: controller products line 38  Cannot read properties of undefined (reading 'premium'), undefined
+error: controller products line 38  Cannot read properties of undefined (reading 'premium'), undefined
+error: controller products line 38  Cannot read properties of undefined (reading 'premium'), undefined
+error: controller products line 38  Cannot read properties of undefined (reading 'premium'), undefined
+error: controller products line 38  Cannot read properties of undefined (reading 'premium'), undefined
+error: controller products line 38  Cannot read properties of undefined (reading 'premium'), undefined
+error: controller products line 38  E11000 duplicate key error collection: ecommerce.products index: code_1 dup key: { code: "1123fe" }, 11000
+error: controller products line 38  Cannot read properties of undefined (reading 'premium'), undefined
+error: controller products line 38  Cannot read properties of undefined (reading 'premium'), undefined
+error: controller products line 38  Cannot read properties of undefined (reading 'premium'), undefined
+error: controller products line 38  Cannot read properties of undefined (reading 'premium'), undefined
+error: controller products line 38  Cannot read properties of undefined (reading 'premium'), undefined
+error: controller products line 38  Error triying to create Product, 2
+error: controller products line 38  Cannot read properties of undefined (reading 'premium'), undefined
+error: controller products line 38  Error triying to create Product, 2
+error: controller products line 38  E11000 duplicate key error collection: ecommerce.products index: code_1 dup key: { code: "1123fe" }, 11000
+error: controller products line 38  E11000 duplicate key error collection: ecommerce.products index: code_1 dup key: { code: "1123fe" }, 11000
+error: controller products line 38  E11000 duplicate key error collection: ecommerce.products index: code_1 dup key: { code: "1123fe" }, 11000
+error: controller products line 38  Cannot read properties of undefined (reading 'premium'), undefined
+error: controller products line 38  Cannot read properties of undefined (reading 'premium'), undefined
+error: Middleware auth.js line 35 Cannot read properties of undefined (reading 'email'), undefined
+error: controller products line 38  Cannot read properties of undefined (reading 'premium'), undefined
+error: Middleware auth.js line 35 Cannot read properties of undefined (reading 'email'), undefined
+error: controller products line 38  Cannot read properties of undefined (reading 'premium'), undefined
+error: Middleware auth.js line 35 Cannot read properties of undefined (reading 'email'), undefined
+error: controller products line 38  Cannot read properties of undefined (reading 'premium'), undefined
+error: Middleware auth.js line 35 Cannot read properties of undefined (reading 'email'), undefined
+error: controller products line 38  E11000 duplicate key error collection: ecommerce.products index: code_1 dup key: { code: "1123fe" }, 11000
+error: controller products line 38  E11000 duplicate key error collection: ecommerce.products index: code_1 dup key: { code: "1123fe" }, 11000
+error: Middleware auth.js line 35 Cannot read properties of undefined (reading 'email'), undefined
+error: Middleware auth.js line 35 Cannot read properties of undefined (reading 'email'), undefined
+error: controller products line 38  E11000 duplicate key error collection: ecommerce.products index: code_1 dup key: { code: "1123fe" }, 11000
+error: Middleware auth.js line 35 Cannot read properties of undefined (reading 'email'), undefined
+error: Middleware auth.js line 35 Cannot read properties of undefined (reading 'email'), undefined
+error: controller products line 100  Cannot read properties of undefined (reading 'premium'), undefined
+error: controller products line 100  Cannot read properties of undefined (reading 'premium'), undefined
+error: controller products line 100  Cannot read properties of undefined (reading 'premium'), undefined
+error: controller products line 100  Cannot read properties of undefined (reading 'premium'), undefined
+error: controller products line 38  E11000 duplicate key error collection: ecommerce.products index: code_1 dup key: { code: "1123fe" }, 11000
+error: controller products line 100  Cannot read properties of undefined (reading 'premium'), undefined
+error: controller products line 100  Cannot read properties of undefined (reading 'premium'), undefined
+error: controller products line 100  Cannot read properties of undefined (reading 'premium'), undefined
+error: controller products line 38  E11000 duplicate key error collection: ecommerce.products index: code_1 dup key: { code: "1123fe" }, 11000
+error: controller products line 100  Cannot read properties of undefined (reading 'premium'), undefined
+error: controller products line 100  Cannot read properties of undefined (reading 'premium'), undefined
+error: controller products line 100  Cannot read properties of undefined (reading 'premium'), undefined
+error: controller products line 100  Cannot read properties of undefined (reading 'premium'), undefined
+error: controller products line 38  E11000 duplicate key error collection: ecommerce.products index: code_1 dup key: { code: "1123fe" }, 11000
+error: controller products line 100  Cannot read properties of undefined (reading 'premium'), undefined
+error: controller products line 100  Cannot read properties of undefined (reading 'premium'), undefined
+error: controller products line 100  Cannot read properties of undefined (reading 'premium'), undefined
+error: controller products line 100  Cannot read properties of undefined (reading 'premium'), undefined
+error: controller products line 100  Cannot read properties of undefined (reading 'premium'), undefined
+error: controller products line 38  E11000 duplicate key error collection: ecommerce.products index: code_1 dup key: { code: "1123fe" }, 11000
+error: controller products line 100  Cannot read properties of undefined (reading 'premium'), undefined
+error: controller products line 100  Cannot read properties of undefined (reading 'premium'), undefined
+error: controller products line 100  Cannot read properties of undefined (reading '_id'), undefined
+error: Controller session line 117 Cannot read properties of undefined (reading 'email'), undefined
+error: Controller session line 117 Cannot read properties of undefined (reading 'email'), undefined
+error: Controller session line 117 Cannot read properties of undefined (reading 'email'), undefined
+error: Controller session line 117 Cannot read properties of undefined (reading 'email'), undefined
+error: Controller session line 117 Cannot read properties of undefined (reading 'email'), undefined

@@ -6,9 +6,6 @@ import gitHubStrategy from "passport-github2";
 import config from "./config.js";
 import CartManager from "../dao/mongo/cartsManager.js";
 import SaveUserDTO from "../dao/DTOs/SaveUser.js";
-import {generateUserErrorInfo} from "../services/errors/info.js";
-import CustomError from "../services/errors/CustomError.js";
-import EErrors from "../services/errors/enums.js";
 
 
 const cartManager = new CartManager();

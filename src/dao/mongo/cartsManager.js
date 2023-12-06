@@ -64,7 +64,7 @@ export default class MongoCartManager {
             return { error: error.message };
         }
     };
-    async update(cid, updateData) {
+    update = async (cid, updateData) => {
         try {
             const updatedCart = await cartsModel.findByIdAndUpdate(cid, updateData, { new: true });
 
@@ -78,7 +78,7 @@ export default class MongoCartManager {
             throw error;
         }
     }
-    async deleteProducts(cid) {
+    deleteProducts = async(cid) => {
         try {
             const updatedCart = await cartsModel.findByIdAndUpdate(cid,{$set: { products: [] }},{ new: true });
             return updatedCart;

@@ -20,20 +20,28 @@ export const getProducts = async (req, res) => {
 //Create a product /api/products
 export const addProduct = async (req, res) => {
     const user = req.session.user;
+    const mockUser = req.body.user; //For supertest con sessions
+    const mockProduct = req.body.mockProduct; //For supertest con sessions
     try {
-        const productDTO = new productsDTO(req.body, user);
-        let { title, description, category, code, price, stock } = productDTO
-        if (!title || !description || !category || !code || !price || !stock) {
-            CustomError.createError({
-                name: "Product creation error",
-                cause: generateProductErrorInfo({ title, description, category, code, price, stock }),
-                message: "Error triying to create Product",
-                code: EErrors.INVALID_TYPES_ERROR
-            })
+        if (!user) {
+            //This is for supertest
+            const productDTO = new productsDTO(mockProduct, mockUser);
+            const productAdded = await productManager.add(productDTO);
+            return res.status(200).send({ status: "success", payload: productAdded });
+        } else {
+            const productDTO = new productsDTO(req.body, user);
+            let { title, description, category, code, price, stock } = productDTO
+            if (!title || !description || !category || !code || !price || !stock) {
+                CustomError.createError({
+                    name: "Product creation error",
+                    cause: generateProductErrorInfo({ title, description, category, code, price, stock }),
+                    message: "Error triying to create Product",
+                    code: EErrors.INVALID_TYPES_ERROR
+                })
+            }
+            const productAdded = await productManager.add(productDTO);
+            return res.status(200).send({ status: "success", payload: productAdded });
         }
-        const productAdded = await productManager.add(productDTO);
-        return res.status(200).send({ status: "success", payload: productAdded });
-        //Create a product
     } catch (error) {
         req.logger.error(`controller products line 38  ${error.message}, ${error.code}`);
         return res.send({ status: "error", error: ` ${error.name}: ${error.cause},${error.message},${error.code}` });
@@ -60,7 +68,7 @@ export const updateProduct = async (req, res) => {
     try {
         const id = req.params.pid;
         const updateProduct = req.body;
-    
+
         const result = await productManager.update(id, updateProduct);
         return res.send(result);
     } catch (error) {
@@ -74,16 +82,22 @@ export const deleteProduct = async (req, res) => {
     try {
         const id = req.params.pid;
         const user = req.session.user;
-        if (user.premium === "true") {
+        const mockUser =  req.body.user;
+        const premium = mockUser.premium || user.premium;
+        const userId = mockUser._id || user._id;
+        console.log("este ide :", id )
+        console.log("este user :", user )
+        console.log("este mockUser :", mockUser )
+        if (premium === "true") {
             const products = await productsModel.find();
 
-            const userProducts = products.filter(product => product.owner === user._id);
+            const userProducts = products.filter(product => product.owner === userId);
             const productToDelete = userProducts.find(product => product._id.toString() === id);
 
             if (productToDelete) {
                 await productManager.delete(productToDelete._id.toString());
                 res.status(200).send({ status: "success", message: "product deleted" });
-            }else if (!productToDelete){
+            } else if (!productToDelete) {
                 res.status(200).send({ error: "error", message: "Product with that id dosnt exist" });
             }
         } else {

@@ -7,6 +7,14 @@ export default class MongoProductManager {
     constructor() {
     }
     // Get all products from the database
+    getProducts = async () => {
+        try {
+            const products = await productsModel.find();
+            return products
+        } catch (error) {
+            throw error ; 
+        }
+    }
     get = async (limit, page, sortOptions, category) => {
         try {
             const filter = {};
@@ -30,10 +38,11 @@ export default class MongoProductManager {
     // Add a new product to the database
     add = async (productDTO) => {
         const { title, description, category, code, price, stock, thumbnail, owner} = productDTO;
-            await productsModel.create({ title, description, category, code, price, stock, thumbnail, owner});
+        const result = await productsModel.create({ title, description, category, code, price, stock, thumbnail, owner});
+        return result;
     }
     // Get product by ID
-    async getById(id) {
+     getById = async (id) => {
         const result = { status: "failed", message: "" }
         const searchById = productsModel.findById(id);
         if (searchById) {
@@ -47,7 +56,7 @@ export default class MongoProductManager {
         }
     }
     // update a product
-    async update(id, updateProductData) {
+    update= async(id, updateProductData) => {
         try {
             const filter = { _id: id };
             const actualizacion = {
@@ -63,7 +72,7 @@ export default class MongoProductManager {
         }
     }
     //delete a product
-    async delete(id) {
+    delete = async(id) => {
         const filter = { _id: id };
 
         try {
