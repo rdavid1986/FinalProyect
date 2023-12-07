@@ -153,3 +153,7 @@ error: Controller session line 117 Cannot read properties of undefined (reading 
 error: Controller session line 117 Cannot read properties of undefined (reading 'email'), undefined
 error: Controller session line 117 Cannot read properties of undefined (reading 'email'), undefined
 error: Controller session line 117 Cannot read properties of undefined (reading 'email'), undefined
+error: Middleware auth.js line 46 Cannot read properties of undefined (reading 'role'), undefined
+error: Middleware auth.js line 46 Cannot read properties of undefined (reading 'role'), undefined
+error: Middleware auth.js line 46 Cannot read properties of undefined (reading 'role'), undefined
+error: Middleware auth.js line 46 Cannot read properties of undefined (reading 'role'), undefined

@@ -85,9 +85,6 @@ export const deleteProduct = async (req, res) => {
         const mockUser =  req.body.user;
         const premium = mockUser.premium || user.premium;
         const userId = mockUser._id || user._id;
-        console.log("este ide :", id )
-        console.log("este user :", user )
-        console.log("este mockUser :", mockUser )
         if (premium === "true") {
             const products = await productsModel.find();
 

@@ -30,7 +30,7 @@ export const addCart = async (req, res) => {
 export const getCarts = async (req, res) => {
     try {
         const carts = await cartsManager.get();
-    
+
         if (carts.length === 0) {
             res.status(404).send({
                 status: 'error',
@@ -49,7 +49,7 @@ export const getCartById = async (req, res) => {
     try {
         const cid = req.params.cid;
         const cart = await cartsManager.getById(cid);
-    
+
         if (!cart) {
             res.status(404).send({
                 status: 'error',
@@ -68,32 +68,40 @@ export const getCartById = async (req, res) => {
 
 export const addProductToCart = async (req, res) => {
     try {
-        const cid = req.params.cid;
-        const pid = req.params.pid;
-        const user = req.session.user;
+        const cid = req.params.cid || req.body.cid;
+        const pid = req.params.pid || req.body.pid;
+        const user = req.session.user || req.body.user;
+
         const product = await productManager.getById(pid);
         const cart = await cartsManager.getById(cid);
-        
+
         if (!product) {
-            res.status(404).send({status: 'error', message: `The product with that ID: ${pid} doesnt exist`});
-            return;
-        } else if (!cart) {
-            res.status(404).send({status: 'error',message: `The cart with that ID: ${cid} doesnt exist`});
-            return;
-        } else if (user.premium === "true") {
-            if (product.owner === user._id) {
-                res.status(401).send({ status: "error", message: "You can't add your own product to your cart" })
-            }
-            return;
+            return res.status(404).send({ status: 'error', message: `The product with ID ${pid} doesn't exist` });
         }
+
+        if (!cart) {
+            return res.status(404).send({ status: 'error', message: `The cart with ID ${cid} doesn't exist` });
+        }
+
+        if (user.premium === "true" && product.owner === user._id) {
+            return res.status(401).send({ status: "error", message: "You can't add your own product to your cart" });
+        }
+
         const addProduct = await cartsManager.addToCart(cid, pid);
-        return res.status(200).send({ status: `success products added to cart ${cid}`, payload: addProduct });
+        return res.status(200).send({
+            status: "success",
+            message: 'Product successfully added to the cart',
+            payload: addProduct
+        });
     } catch (error) {
         req.logger.error(`Controller cart line 92 ${error.message}, ${error.code}`);
-        res.status(500).send({ status: "error", error: `${error.name}: ${error.cause},${error.message},${error.code}` });
+        return res.status(500).send({
+            status: "error",
+            error: `${error.name}: ${error.cause},${error.message},${error.code}`
+        });
     }
-    
 };
+
 //Rute to delete a cart
 export const deleteProducts = async (req, res) => {
     try {
@@ -108,18 +116,18 @@ export const deleteProducts = async (req, res) => {
 //rute to delete product in a cart
 export const deleteProductFromCart = async (req, res) => {
     try {
-        const cid = req.params.cid;
-        const pid = req.params.pid;
-        const user = req.session.user;
-        if (user.premiun === true) {
+        const cid = req.params.cid || req.body.cid;
+        const pid = req.params.pid || req.body.pid;
+        const user = req.session.user || req.body.user;
+        if (user.premiun === "true") {
             if (product.owner === user._id) {
-                const deleteProductInCart = await cartsManager.deleteFromCart(cid, pid);
-                return res.status(200).send({ status: "success Product delete fron this cart", payload: deleteProductInCart });
+                await cartsManager.deleteFromCart(cid, pid);
+                return res.status(200).send({ status: "success", message: "Product delete fron this cart"});
             }
             return;
         }
-        const deleteProductInCart = await cartsManager.deleteFromCart(cid, pid);
-        return res.status(200).send({ status: "success Product delete fron this cart", payload: deleteProductInCart });
+        await cartsManager.deleteFromCart(cid, pid);
+        return res.status(200).send({ status: "success", message: "Product delete fron this cart"  });
     } catch (error) {
         req.logger.error(`Controller carts line 125 ${error.message}, ${error.code}`);
         res.status(500).send({ status: "error", error: `${error.name}: ${error.cause},${error.message},${error.code}` });
@@ -143,17 +151,17 @@ export const purchase = async (req, res) => {
         const cid = req.params.cid;
         const mail = req.session.user.email;
         const cart = await cartsManager.getById(cid);
-    
+
         if (!cart) return res.status(404).json({ error: 'Cart doesnt exist' });
-    
-    
+
+
         const products = cart.products;
         const productsToPurchase = [];
         const productsNotPurchased = [];
         let totalPricePurchase = 0;
         for (let product of products) {
             const productInfo = await productManager.getById(product._id);
-    
+
             if (productInfo.stock >= product.quantity) {
                 const updatedStock = productInfo.stock - product.quantity;
                 if (updatedStock <= 0) {
@@ -179,12 +187,12 @@ export const purchase = async (req, res) => {
             purchaser: mail
         }
         console.log("ticket", ticket);
-    
+
         ticketModel.create(ticket)
-    
+
         res.status(200).send({ status: "succes", payload: productsToPurchase, totalPricePurchase, productsNotPurchased });
         try {
-    
+
             let result = await transport.sendMail({
                 from: "eccommercer coder proyect<r.david1923@gmail.com>",
                 to: mail,
@@ -199,7 +207,7 @@ export const purchase = async (req, res) => {
             req.logger.info("mail sending success");
         } catch (error) {
             req.logger.error("error sending nodemailer", error);
-    
+
         }
     } catch (error) {
         req.logger.error(`Controller carts line 208 ${error.message}, ${error.code}`);

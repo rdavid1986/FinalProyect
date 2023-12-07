@@ -25,4 +25,4 @@ npm start
 
 --- ./node_modules/.bin/mocha ./test/session.test.js
 --- ./node_modules/.bin/mocha ./test/carts.test.js
---- ./node_modules/.bin/mocha ./test/products.test.js
+--- ./node_modules/.bin/mocha ./test/product.test.js

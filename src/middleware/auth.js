@@ -1,21 +1,21 @@
 import jwt from "jsonwebtoken";
 import config from "../config/config.js";
 
-export const verifyToken = (req,res,next) => {
+export const verifyToken = (req, res, next) => {
     const authHeader = req.header("authorization");
-    if(!authHeader) {
-        return res.status(401).json({ error: "Access Denied, Token Required"})
+    if (!authHeader) {
+        return res.status(401).json({ error: "Access Denied, Token Required" })
     }
 
     const token = authHeader.split(' ')[1];
 
-    if(!token) {
-        return res.status(401).json({error: "Access Denied, Token Required"})
+    if (!token) {
+        return res.status(401).json({ error: "Access Denied, Token Required" })
     }
 
     jwt.verify(token, config.privateKey, (error, credentials) => {
         if (error) {
-            return res.status(401).json({error: "invalid token"});
+            return res.status(401).json({ error: "invalid token" });
         }
 
         req.user = credentials.user
@@ -24,47 +24,59 @@ export const verifyToken = (req,res,next) => {
 }
 
 export const adminAccess = (req, res, next) => {
+    const email = req.body.user.email || req.session.user.email;
+    console.log("email", email)
+
     try {
-        if (req.session.user.email === "adminCoder@coder.com") {
+        if (email === "adminCoder@coder.com") {
             next();
-        }else if (req.session.user.premium === true){
+        } else if (req.session.user.premium === true) {
             next();
         }
-        
+
     } catch (error) {
         req.logger.error(`Middleware auth.js line 35 ${error.message}, ${error.code}`);
-        res.send({status:"failed", message: "You are not allowed to access this"});
+        res.send({ status: "failed", message: "You are not allowed to access this" });
     }
 }
 export const userAccess = (req, res, next) => {
+    
     try {
-        
-        if (req.session.user.role === "user") {
+        let role = req.body.user.role;
+        if(!role) {
+            role = req.session.user.role;
+        }
+        if (role === "user") {
             next();
         }
     } catch (error) {
         req.logger.error(`Middleware auth.js line 46 ${error.message}, ${error.code}`);
-        res.send({status:"failed", message: "You are not allowed to access this"});
+        res.send({ status: "failed", message: "You are not allowed to access this" });
     }
 };
 export const premiumAccess = (req, res, next) => {
+    const premium = req.session.user.premium || req.body.premium;
+    console.log("premium", premium)
     try {
-        
-        if (req.session.user.premium === "true") {
+
+        if (premium === "true") {
             next();
         }
     } catch (error) {
         req.logger.error(`Middleware auth.js line 57 ${error.message}, ${error.code}`);
-        res.send({status:"failed", message: "You are not allowed to access"});
+        res.send({ status: "failed", message: "You are not allowed to access" });
     }
-    
+
 }
 export const publicAccess = (req, res, next) => {
+    const user = req.session.user || req.body.user;
+    console.log("user", user)
+
     try {
-        if (req.session.user) {
+        if (user) {
             return res.redirect('/products');
-        }else {
-            
+        } else {
+
         }
         next();
     } catch (error) {
@@ -73,8 +85,10 @@ export const publicAccess = (req, res, next) => {
     }
 };
 export const privateAccess = (req, res, next) => {
+    const user = req.session.user || req.body.user;
+
     try {
-        if (!req.session.user) {
+        if (!user) {
             return res.status(403).redirect('/');
         }
         next();
