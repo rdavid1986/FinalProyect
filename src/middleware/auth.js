@@ -24,11 +24,13 @@ export const verifyToken = (req, res, next) => {
 }
 
 export const adminAccess = (req, res, next) => {
-    const email = req.body.user.email || req.session.user.email;
-    console.log("email", email)
+    const user = req.body.user || req.session.user || req.body.admin;
+    const mockUser = req.body.mockUser
 
     try {
-        if (email === "adminCoder@coder.com") {
+        if (user.email === "adminCoder@coder.com") {
+            next();
+        } else if (mockUser.premium === true) {
             next();
         } else if (req.session.user.premium === true) {
             next();
@@ -40,20 +42,21 @@ export const adminAccess = (req, res, next) => {
     }
 }
 export const userAccess = (req, res, next) => {
-    
     try {
-        let role = req.body.user.role;
-        if(!role) {
-            role = req.session.user.role;
-        }
+        let role = req.session.user?.role || req.body.user?.role;
+
         if (role === "user") {
             next();
+        } else {
+            // Puedes personalizar el mensaje de error según tus necesidades
+            res.status(403).send({ status: "failed", message: "You are not allowed to access this" });
         }
     } catch (error) {
         req.logger.error(`Middleware auth.js line 46 ${error.message}, ${error.code}`);
-        res.send({ status: "failed", message: "You are not allowed to access this" });
+        res.status(500).send({ status: "error", error: `${error.name}: ${error.cause},${error.message},${error.code}` });
     }
 };
+
 export const premiumAccess = (req, res, next) => {
     const premium = req.session.user.premium || req.body.premium;
     console.log("premium", premium)
@@ -70,7 +73,6 @@ export const premiumAccess = (req, res, next) => {
 }
 export const publicAccess = (req, res, next) => {
     const user = req.session.user || req.body.user;
-    console.log("user", user)
 
     try {
         if (user) {

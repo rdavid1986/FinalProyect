@@ -43,7 +43,7 @@ export const addProduct = async (req, res) => {
             return res.status(200).send({ status: "success", payload: productAdded });
         }
     } catch (error) {
-        req.logger.error(`controller products line 38  ${error.message}, ${error.code}`);
+        req.logger.error(`controller products line 46  ${error.message}, ${error.code}`);
         return res.send({ status: "error", error: ` ${error.name}: ${error.cause},${error.message},${error.code}` });
     }
 };

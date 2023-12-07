@@ -8,8 +8,13 @@ import {
     logout,
     restarPassword,
     github,
-    current
+    current,
+    deleteUser
 } from "../controllers/routes/session.js";
+import {
+    adminAccess,
+    userAccess
+}from "../middleware/auth.js"
 
 const router = Router();
 
@@ -22,5 +27,6 @@ router.post("/restartPassword", restarPassword)
 router.get('/github', passport.authenticate('github', {scope: ['user:email']}) ,async (req, res) => {})
 router.get('/githubCallback', passport.authenticate('github', {failureRedirect:'/loginFailed'}) , github);
 router.get("/current", current);
+router.delete("/delete", adminAccess, deleteUser);
 
 export default router;

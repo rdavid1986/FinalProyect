@@ -17,9 +17,7 @@ const adminPasword = config.adminPassword
 export const initializePassport = () => {
     passport.use('register', new LocalStrategy({ passReqToCallback: true, usernameField: 'email' }, async (req, username, password, done) => {
         const { first_name, last_name, email, age } = req.body;
-        
         try {
-            
             const exists = await userModel.findOne({ email });
             if (exists) {
                 console.log('User already exist')
@@ -35,8 +33,8 @@ export const initializePassport = () => {
                 role: "user",
                 cart: cart._id
             };
-            console.log(newUser);
-            console.log(newUser.cart._id);
+            console.log("New user register ");
+            
             let userDTO = new SaveUserDTO(newUser);
             let result = await userModel.create(userDTO);
             return done(null, result)
@@ -47,10 +45,10 @@ export const initializePassport = () => {
 
     passport.use('login', new LocalStrategy({ usernameField: 'email' }, async (username, password, done) => {
         try {
-            if ( username === adminName && password === adminPasword){
+            if (username === adminName && password === adminPasword) {
                 const user = {
                     email: username,
-                    role:"admin"
+                    role: "admin"
                 };
                 return done(null, user);
             } else if (username === adminName && password !== adminPasword) {

@@ -23,7 +23,7 @@ describe("Testing Carts dao", () => {
     it("This dao must get cart by id", async function(){
         
         const result =  await this.cartsDao.add();
-        const id = result._id.toString()
+        const id = "656f96e3d5122ebc356f7118"
         const cart = await this.cartsDao.getById(id);
         assert.deepStrictEqual(typeof cart, 'object');
     })

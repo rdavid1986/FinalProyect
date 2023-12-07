@@ -12,7 +12,7 @@ const transport = nodemailer.createTransport({
     service: "gmail",
     port: 587,
     auth: {
-        user: config.TRANSPORTUSER,
+        user: config.transportUser,
         pass: "liyg weqi dpux duuu"
     }
 });
@@ -65,11 +65,10 @@ export const getCartById = async (req, res) => {
         res.status(500).send({ status: "error", error: `${error.name}: ${error.cause},${error.message},${error.code}` });
     }
 };
-
 export const addProductToCart = async (req, res) => {
     try {
-        const cid = req.params.cid || req.body.cid;
-        const pid = req.params.pid || req.body.pid;
+        const cid = req.params.cid ;
+        const pid = req.params.pid ;
         const user = req.session.user || req.body.user;
 
         const product = await productManager.getById(pid);
@@ -101,7 +100,6 @@ export const addProductToCart = async (req, res) => {
         });
     }
 };
-
 //Rute to delete a cart
 export const deleteProducts = async (req, res) => {
     try {

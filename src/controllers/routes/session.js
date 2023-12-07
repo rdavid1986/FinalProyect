@@ -55,8 +55,6 @@ export const logout = async (req, res) => {
         res.status(500).send({ status: "error", error: `${error.name}: ${error.cause},${error.message},${error.code}` });
     }
 };
-
-
 export const restarPassword = async (req, res) => {
     const { email, password } = req.body;
     try {
@@ -90,24 +88,23 @@ export const current = async (req, res) => {
     try {
         if (req.body.user) {
             req.body.user = {
-                first_name: req.user.first_name,
-                last_name: req.user.last_name,
-                full_name: req.user.full_name,
-                age: req.user.age,
-                email: req.user.email,
-                cart: req.user.cart,
-                role: req.user.role,
-                premium: req.user.premium,
-                _id: req.user._id,
+                first_name: req.body.user.first_name,
+                last_name: req.body.user.last_name,
+                full_name: req.body.user.full_name,
+                age: req.body.user.age,
+                email: req.body.user.email,
+                cart: req.body.user.cart,
+                role: req.body.user.role,
+                premium: req.body.user.premium,
+                _id: req.body.user._id,
             }
-            res.send(req.body.user)
-        }
-        if (req.user.email === config.adminName) {
+            res.status(200).send({ status: "success", payload: req.body.user })
+        } else if (req.user.email === config.adminName) {
             req.session.user = {
                 email: req.user.email,
                 role: "admin",
             }
-            res.send(req.session.user)
+            res.status(200).send({ status: "success", payload: req.session.user })
         } else if (req.session.user) {
             req.session.user = {
                 first_name: req.user.first_name,
@@ -120,14 +117,25 @@ export const current = async (req, res) => {
                 premium: req.user.premium,
                 _id: req.user._id,
             }
-            res.send(req.session.user)
+            res.status(200).send({ status: "success", payload: req.session.user })
         } else {
             req.logger.warn("You are not logged in");
-            res.send({ status: "error", message: "You are not logged in" })
+            res.status(200).send({ status: "success", payload: null })
         }
     } catch (error) {
         req.logger.error(`Controller session line 117 ${error.message}, ${error.code}`);
         res.status(500).send({ status: "error", error: `${error.name}: ${error.cause},${error.message},${error.code}` });
     }
-    
+}
+export const deleteUser = async (req, res) => {
+    try {
+        const user = req.body.user;
+        const mockUser = req.body.mockUser;
+        await userModel.deleteOne({email: mockUser.email});
+        res.status(200).send({ status: "success", message: "user delete" })
+
+    } catch (error) {
+        req.logger.error(`Session.js line 141 ${error.message}, ${error.code}`);
+        res.send({ status: "failed", message: "You are not allowed to access this" });
+    }
 }
