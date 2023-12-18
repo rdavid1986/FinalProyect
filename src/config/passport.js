@@ -42,7 +42,6 @@ export const initializePassport = () => {
             return done('Error at creating user:' + error)
         }
     }));
-
     passport.use('login', new LocalStrategy({ usernameField: 'email' }, async (username, password, done) => {
         try {
             if (username === adminName && password === adminPasword) {

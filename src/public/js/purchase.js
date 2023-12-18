@@ -1,4 +1,3 @@
-<a href="/api/carts/{{cart}}/purchase"><button id="buyButton" class="buyButton" >Purchase</button></a>
 const buyButton = document.getElementById("buyButton");
 buyButton.addEventListener("click", async () => {
     try {

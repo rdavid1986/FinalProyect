@@ -2,7 +2,6 @@ const socketClient = io();
 
 
 socketClient.on("serverProducts", (products) => {
-    console.log("Estos son los products que legan a js",products);
     updateProducts(products);
 });
 function updateProducts(products) {

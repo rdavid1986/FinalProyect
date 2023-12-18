@@ -56,13 +56,12 @@ export const userAccess = (req, res, next) => {
         res.status(500).send({ status: "error", error: `${error.name}: ${error.cause},${error.message},${error.code}` });
     }
 };
-
 export const premiumAccess = (req, res, next) => {
     const premium = req.session.user.premium || req.body.premium;
     console.log("premium", premium)
     try {
 
-        if (premium === "true") {
+        if (premium === true) {
             next();
         }
     } catch (error) {

@@ -21,7 +21,7 @@ import session from 'express-session';
 import passport from "passport";
 import { initializePassport } from "../src/config/passport.js";
 import config from "./config/config.js";
-import errorHandler from "./controllers/routes/errorsMiddlewares.js";
+import errorHandler from "../src/middleware/errorsMiddlewares.js";
 import {addLogger} from "./logger.js"
 import swaggerJSDoc from 'swagger-jsdoc'; 
 import swaggerUiExpress from "swagger-ui-express";
@@ -54,7 +54,7 @@ mongoose.connect(mongoURL, {
 app.use(session({
     store: MongoStore.create({
         mongoUrl: mongoURL,
-        ttl: 3600
+        ttl: 600
     }),
     secret: "CoderSecret",
     resave: false,

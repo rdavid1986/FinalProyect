@@ -11,13 +11,13 @@ const userSchema = new mongoose.Schema({
         unique: true,
     },
     age: Number,
-    userName: String, 
-    password: String, 
+    userName: String,
+    password: String,
     role: String,
     premium: {
-        type: String,
-        default: "false",
-    }, 
+        type: Boolean,
+        default: false,
+    },
     cart: {
         type: [
             {
@@ -27,6 +27,20 @@ const userSchema = new mongoose.Schema({
         ],
         default: []
     },
+    documents: {
+        type: [
+            {
+                name: String,
+                reference: String
+            }
+        ],
+        default: [],
+    },
+    status: {
+        type: Boolean,
+        default: false,
+    },
+    last_connection: String,
     active: Boolean,
     recoverToken: String,
 })

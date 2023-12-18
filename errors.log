@@ -194,3 +194,49 @@ error: controller products line 38  E11000 duplicate key error collection: ecomm
 error: error sending nodemailer Missing credentials for "PLAIN" {"code":"EAUTH","command":"API","stack":"Error: Missing credentials for \"PLAIN\"\n    at SMTPConnection._formatError (C:\\Users\\BANGHO\\Desktop\\Sixteenth-Challenge-Swagger-back-end-nodeJs\\node_modules\\nodemailer\\lib\\smtp-connection\\index.js:790:19)\n    at SMTPConnection.login (C:\\Users\\BANGHO\\Desktop\\Sixteenth-Challenge-Swagger-back-end-nodeJs\\node_modules\\nodemailer\\lib\\smtp-connection\\index.js:444:38)\n    at C:\\Users\\BANGHO\\Desktop\\Sixteenth-Challenge-Swagger-back-end-nodeJs\\node_modules\\nodemailer\\lib\\smtp-transport\\index.js:272:32\n    at SMTPConnection.<anonymous> (C:\\Users\\BANGHO\\Desktop\\Sixteenth-Challenge-Swagger-back-end-nodeJs\\node_modules\\nodemailer\\lib\\smtp-connection\\index.js:213:17)\n    at Object.onceWrapper (node:events:627:28)\n    at SMTPConnection.emit (node:events:513:28)\n    at SMTPConnection._actionEHLO (C:\\Users\\BANGHO\\Desktop\\Sixteenth-Challenge-Swagger-back-end-nodeJs\\node_modules\\nodemailer\\lib\\smtp-connection\\index.js:1347:14)\n    at SMTPConnection._processResponse (C:\\Users\\BANGHO\\Desktop\\Sixteenth-Challenge-Swagger-back-end-nodeJs\\node_modules\\nodemailer\\lib\\smtp-connection\\index.js:969:20)\n    at SMTPConnection._onData (C:\\Users\\BANGHO\\Desktop\\Sixteenth-Challenge-Swagger-back-end-nodeJs\\node_modules\\nodemailer\\lib\\smtp-connection\\index.js:755:14)\n    at SMTPConnection._onSocketData (C:\\Users\\BANGHO\\Desktop\\Sixteenth-Challenge-Swagger-back-end-nodeJs\\node_modules\\nodemailer\\lib\\smtp-connection\\index.js:193:44)"}
 error: error sending nodemailer Missing credentials for "PLAIN" {"code":"EAUTH","command":"API","stack":"Error: Missing credentials for \"PLAIN\"\n    at SMTPConnection._formatError (C:\\Users\\BANGHO\\Desktop\\Sixteenth-Challenge-Swagger-back-end-nodeJs\\node_modules\\nodemailer\\lib\\smtp-connection\\index.js:790:19)\n    at SMTPConnection.login (C:\\Users\\BANGHO\\Desktop\\Sixteenth-Challenge-Swagger-back-end-nodeJs\\node_modules\\nodemailer\\lib\\smtp-connection\\index.js:444:38)\n    at C:\\Users\\BANGHO\\Desktop\\Sixteenth-Challenge-Swagger-back-end-nodeJs\\node_modules\\nodemailer\\lib\\smtp-transport\\index.js:272:32\n    at SMTPConnection.<anonymous> (C:\\Users\\BANGHO\\Desktop\\Sixteenth-Challenge-Swagger-back-end-nodeJs\\node_modules\\nodemailer\\lib\\smtp-connection\\index.js:213:17)\n    at Object.onceWrapper (node:events:627:28)\n    at SMTPConnection.emit (node:events:513:28)\n    at SMTPConnection._actionEHLO (C:\\Users\\BANGHO\\Desktop\\Sixteenth-Challenge-Swagger-back-end-nodeJs\\node_modules\\nodemailer\\lib\\smtp-connection\\index.js:1347:14)\n    at SMTPConnection._processResponse (C:\\Users\\BANGHO\\Desktop\\Sixteenth-Challenge-Swagger-back-end-nodeJs\\node_modules\\nodemailer\\lib\\smtp-connection\\index.js:969:20)\n    at SMTPConnection._onData (C:\\Users\\BANGHO\\Desktop\\Sixteenth-Challenge-Swagger-back-end-nodeJs\\node_modules\\nodemailer\\lib\\smtp-connection\\index.js:755:14)\n    at SMTPConnection._onSocketData (C:\\Users\\BANGHO\\Desktop\\Sixteenth-Challenge-Swagger-back-end-nodeJs\\node_modules\\nodemailer\\lib\\smtp-connection\\index.js:193:44)"}
 error: error sending nodemailer Missing credentials for "PLAIN" {"code":"EAUTH","command":"API","stack":"Error: Missing credentials for \"PLAIN\"\n    at SMTPConnection._formatError (C:\\Users\\BANGHO\\Desktop\\Sixteenth-Challenge-Swagger-back-end-nodeJs\\node_modules\\nodemailer\\lib\\smtp-connection\\index.js:790:19)\n    at SMTPConnection.login (C:\\Users\\BANGHO\\Desktop\\Sixteenth-Challenge-Swagger-back-end-nodeJs\\node_modules\\nodemailer\\lib\\smtp-connection\\index.js:444:38)\n    at C:\\Users\\BANGHO\\Desktop\\Sixteenth-Challenge-Swagger-back-end-nodeJs\\node_modules\\nodemailer\\lib\\smtp-transport\\index.js:272:32\n    at SMTPConnection.<anonymous> (C:\\Users\\BANGHO\\Desktop\\Sixteenth-Challenge-Swagger-back-end-nodeJs\\node_modules\\nodemailer\\lib\\smtp-connection\\index.js:213:17)\n    at Object.onceWrapper (node:events:627:28)\n    at SMTPConnection.emit (node:events:513:28)\n    at SMTPConnection._actionEHLO (C:\\Users\\BANGHO\\Desktop\\Sixteenth-Challenge-Swagger-back-end-nodeJs\\node_modules\\nodemailer\\lib\\smtp-connection\\index.js:1347:14)\n    at SMTPConnection._processResponse (C:\\Users\\BANGHO\\Desktop\\Sixteenth-Challenge-Swagger-back-end-nodeJs\\node_modules\\nodemailer\\lib\\smtp-connection\\index.js:969:20)\n    at SMTPConnection._onData (C:\\Users\\BANGHO\\Desktop\\Sixteenth-Challenge-Swagger-back-end-nodeJs\\node_modules\\nodemailer\\lib\\smtp-connection\\index.js:755:14)\n    at SMTPConnection._onSocketData (C:\\Users\\BANGHO\\Desktop\\Sixteenth-Challenge-Swagger-back-end-nodeJs\\node_modules\\nodemailer\\lib\\smtp-connection\\index.js:193:44)"}
+error: Middleware auth.js line 35 Cannot read properties of undefined (reading 'premium'), undefined
+error: Controller session line 63 Cannot read properties of undefined (reading 'email'), undefined
+error: Controller session line 63 identification is not defined, undefined
+error: Controller session line 63 user is not defined, undefined
+error: Controller session line 63 user is not defined, undefined
+error: Controller session line 63 documents is not defined, undefined
+error: Controller session line 63 Cannot read properties of undefined (reading 'name'), undefined
+error: Controller session line 63 Cannot read properties of undefined (reading 'name'), undefined
+error: Controller session line 63 Cannot read properties of undefined (reading 'name'), undefined
+error: controller products line 46  Error triying to create Product, 2
+error: controller products line 46  Error triying to create Product, 2
+error: controller products line 46  Error triying to create Product, 2
+error: controller products line 46  Error triying to create Product, 2
+error: controller products line 46  Error triying to create Product, 2
+error: controller products line 46  Error triying to create Product, 2
+error: controller products line 46  Error triying to create Product, 2
+error: controller products line 46  Error triying to create Product, 2
+error: controller products line 46  Error triying to create Product, 2
+error: controller products line 46  Error triying to create Product, 2
+error: controller products line 46  Error triying to create Product, 2
+error: controller products line 46  Error triying to create Product, 2
+error: controller products line 46  Error trying to create Product, 2
+error: controller products line 46  Error trying to create Product, 2
+error: controller products line 46  Error trying to create Product, 2
+error: controller products line 46  Error triying to create Product, 2
+error: controller products line 46  Error triying to create Product, 2
+error: Middleware auth.js line 35 Cannot read properties of undefined (reading 'premium'), undefined
+error: Middleware auth.js line 35 Cannot read properties of undefined (reading 'premium'), undefined
+error: controller products line 46  Error triying to create Product, 2
+error: controller products line 46  Error triying to create Product, 2
+error: controller products line 46  Error triying to create Product, 2
+error: controller products line 46  Error triying to create Product, 2
+error: controller products line 46  Error trying to create Product, 2
+error: controller products line 46  Error trying to create Product, 2
+error: controller products line 46  Error trying to create Product, 2
+error: controller products line 46  Error trying to create Product, 2
+error: controller products line 46  Error trying to create Product, 2
+error: controller products line 46  tipeof is not defined, undefined
+error: controller products line 46  Assignment to constant variable., undefined
+error: controller products line 46  Error trying to create Product, 2
+error: controller products line 46  thumbnail is not defined, undefined
+error: controller products line 46  Error trying to create Product, 2
+error: controller products line 46  path is not defined, undefined
+error: controller products line 46  __dirname is not defined, undefined
+error: controller products line 46  products validation failed: thumbnail: Cast to embedded failed for value "C:\\Users\\BANGHO\\Desktop\\Sixteenth-Challenge-Swagger-back-end-nodeJs - copia\\src\\public\\products\\Captura de pantalla 2023-11-23 194230.png" (type string) at path "thumbnail" because of "ObjectParameterError", undefined
+error: controller products line 46  products validation failed: thumbnail: Cast to embedded failed for value "C:\\Users\\BANGHO\\Desktop\\Sixteenth-Challenge-Swagger-back-end-nodeJs - copia\\src\\public\\products\\Captura de pantalla 2023-11-23 194230.png" (type string) at path "thumbnail" because of "ObjectParameterError", undefined

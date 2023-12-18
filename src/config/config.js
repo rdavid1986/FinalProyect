@@ -12,6 +12,4 @@ export default {
     loggerEnv: process.env.LOGGER_ENVIRONMENT,
     privateKey: process.env.PRIVATE_KEY,
     transportUser: process.env.TRANSPORT_USER
-
-
 };

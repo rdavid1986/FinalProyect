@@ -4,7 +4,8 @@ import productsDTO from "../../dao/DTOs/products.js";
 import { generateProductErrorInfo } from "../../services/errors/info.js";
 import CustomError from "../../services/errors/CustomError.js";
 import EErrors from "../../services/errors/enums.js";
-
+import path from "path";
+import __dirname from "../../utils.js"
 //We create the instance of the class
 const productManager = new ProductManager();
 //Get products /api/products
@@ -22,29 +23,46 @@ export const addProduct = async (req, res) => {
     const user = req.session.user;
     const mockUser = req.body.user; //For supertest con sessions
     const mockProduct = req.body.mockProduct; //For supertest con sessions
+
     try {
         if (!user) {
-            //This is for supertest
+            // This is for supertest
             const productDTO = new productsDTO(mockProduct, mockUser);
             const productAdded = await productManager.add(productDTO);
             return res.status(200).send({ status: "success", payload: productAdded });
         } else {
-            const productDTO = new productsDTO(req.body, user);
-            let { title, description, category, code, price, stock } = productDTO
-            if (!title || !description || !category || !code || !price || !stock) {
+            console.log("esto se envio", req.body);
+
+            let { title, description, category, code, price, stock, thumbnail } = req.body;
+            
+            if (typeof price === "string" && typeof stock === "string") {
+                price = +price; 
+                stock = +stock;
+            }
+            if (req.files) {
+                thumbnail = req.files.map((file) => {
+                  return path.join(__dirname, '/public/products/', file.filename);
+                });
+            }
+            console.log("asi quedo ",title, description, category, code, price, stock, thumbnail);
+
+            if (!title || !description || !category || !code || !price || !stock || !thumbnail) {
                 CustomError.createError({
                     name: "Product creation error",
-                    cause: generateProductErrorInfo({ title, description, category, code, price, stock }),
-                    message: "Error triying to create Product",
+                    cause: generateProductErrorInfo({ title, description, category, code, price, stock, thumbnail }),
+                    message: "Error trying to create Product",
                     code: EErrors.INVALID_TYPES_ERROR
                 })
             }
+
+            const productDTO = new productsDTO({ title, description, category, code, price, stock, thumbnail }, user);
             const productAdded = await productManager.add(productDTO);
+
             return res.status(200).send({ status: "success", payload: productAdded });
         }
     } catch (error) {
         req.logger.error(`controller products line 46  ${error.message}, ${error.code}`);
-        return res.send({ status: "error", error: ` ${error.name}: ${error.cause},${error.message},${error.code}` });
+        return res.status(500).send({ status: "error", error: ` ${error.name}: ${error.cause},${error.message},${error.code}` });
     }
 };
 //Get product by id /api/products/pid

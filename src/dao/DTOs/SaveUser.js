@@ -9,7 +9,9 @@ export default class SaveUserDTO {
         this.password = user.password;
         this.role = user.role;
         this.cart = user.cart;
+        this._id = user._id;
         this.premium = user.premium;
+        this.documents = user.documents;
         this.active = true;
     }
 }

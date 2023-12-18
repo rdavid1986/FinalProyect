@@ -30,7 +30,7 @@ const productSchema = new mongoose.Schema({
         require:true,
     },
     thumbnail: {
-        type: Array,
+        type: [],
         default: [],
     },
     status: {

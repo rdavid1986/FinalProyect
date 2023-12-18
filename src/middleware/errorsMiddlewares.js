@@ -1,4 +1,4 @@
-import EErrors from "../../services/errors/enums.js";
+import EErrors from "../services/errors/enums.js";
 /* import CustomError from "../../services/errors/CustomError.js"; */
 
 export default (error, req, res, next) => {

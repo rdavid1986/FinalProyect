@@ -1,17 +1,84 @@
 <div class="profile">
+    <h1 class="profile_h1">Your profile (no sensitive data)</h1>
     <div class="profile_div">
-        <h1>Your profile (no sensitive data)</h1>
         <p>Name: {{user.first_name}}</p>
-        <p>email: {{user.email}}</p>
-        <p>role: {{user.role}}</p>
+        <p>Email: {{user.email}}</p>
+        <p>Role: {{user.role}}</p>
     </div>
+    <br />
+    {{#if user.premium}}
+        <p>You are a premium user</p>
+        <p>upload your product</p>
+        <div class="div__addProduct">
+        <div id="errorMessage" style="color: red;"></div>
+        <h2 class="h2add__product">Add Product</h2>
+        <form class="div__addProduct" id="uploadProductForm" data-user-id="{{user._id}}" action="/api/users/{{user._id}}/product" method="POST" enctype="multipart/form-data">
+            <label>title:</label>
+            <input name="title" id="title" />
+            <label>description:</label>
+            <input name="description" id="description" />
+            <label>Category:</label>
+            <input name="category" id="category" />
+            <label>price:</label>
+            <input name="price" id="price" />
+            <label>thumbnail:</label>
+            <input type="file" name="thumbnail" id="thumbnail" />
+            <label>code:</label>
+            <input name="code" id="code" />
+            <label>stock:</label>
+            <input name="stock" id="stock" />
+
+            <input type="submit" id="submit" />
+        </form>
+    {{else}}
+        <div class="profile_div_form">
+            <h1>Do you want to be a premium user?</h1>
+            <p>Upload your documentation</p>
+            <form
+                id="documentsForm"
+                class="profile_div_form"
+                action="/api/users/{{user._id}}/documents"
+                method="POST"
+                enctype="multipart/form-data"
+            >
+                <label for="Identification">Identification:</label>
+                <input type="file" name="documents" id="Identification" />
+                <br />
+                <label for="Proof_of_Address">Proof of Address:</label>
+                <input type="file" name="documents" id="Proof_of_Address" />
+                <br />
+                <label for="Proof_of_Account_Statement">Proof of Account Statement:</label>
+                <input
+                    type="file"
+                    name="documents"
+                    id="Proof_of_Account_Statement"
+                />
+                <br />
+                <button
+                    type="button"
+                    class="submit"
+                    id="documentation_submit"
+                >Submit</button>
+            </form>
+        </div>
+    {{/if}}
+
     <div>
-        <a href="/api/session/logout"><button id="logout_button">Logout</button></a>
-        <a href='/cart/{{user.cart}}' ><button class="button">Cart</button></A>
-        <a href='/products' ><button class="button">Shop</button></A>
+        <a href="/api/session/logout">
+            <button id="logout_button">Logout</button>
+        </a>
+        <a href="/cart/{{user.cart}}">
+            <button class="button">Cart</button>
+        </a>
+        <a href="/products">
+            <button class="button">Shop</button>
+        </a>
     </div>
 </div>
 
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script src="/socket.io/socket.io.js"></script>
 <script src="/js/index.js"></script>
 <script src="/js/products.js"></script>
+<script src="/js/uploadProduct.js"></script>
+<script src="/js/uploadDocuments.js"></script>

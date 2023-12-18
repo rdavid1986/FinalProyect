@@ -18,14 +18,23 @@ export const login = async (req, res) => {
         return res.status(200).send({ status: "success", payload: req.session.user });
     } else {
         req.session.user = {
+            _id: req.user._id,
             first_name: req.user.first_name,
             last_name: req.user.last_name,
             age: req.user.age,
             email: req.user.email,
+            premium: req.user.premium,
             cart: req.user.cart,
             role: req.user.role,
+            documents: req.user.documents,
         }
-        res.status(200).send({ status: "success", payload: req.user })
+        const last_connection = {
+            $set: { last_connection: new Date().toISOString() }
+        };
+        await userModel.updateOne({ email: req.user.email }, last_connection);
+    
+        req.logger.info("user login")
+        res.status(200).send({ status: "success", payload: req.session.user })
     }
 };
 export const failLogin = (req, res) => {
@@ -41,6 +50,10 @@ export const failRegister = async (req, res) => {
 };
 export const logout = async (req, res) => {
     try {
+        const last_connection = {
+            $set: { last_connection: new Date().toISOString() }
+        };
+        await userModel.updateOne({ email: req.user.email }, last_connection);
         req.session.destroy(error => {
             if (!error) {
                 req.logger.info("Logout success");
@@ -117,6 +130,7 @@ export const current = async (req, res) => {
                 premium: req.user.premium,
                 _id: req.user._id,
             }
+            console.log(req.session.user._id)
             res.status(200).send({ status: "success", payload: req.session.user })
         } else {
             req.logger.warn("You are not logged in");

@@ -79,7 +79,17 @@ export const register = (req, res) => {
 export const profile = (req, res) => {
     res.render('profile', {
         style: "profile.css",
-        user: req.session.user
+        user : {
+            _id: req.user._id,
+            first_name: req.user.first_name,
+            last_name: req.user.last_name,
+            age: req.user.age,
+            email: req.user.email,
+            premium: req.user.premium,
+            cart: req.user.cart,
+            role: req.user.role,
+            documents: req.user.documents,
+        }
     });
 };
 export const resetPassword = (req, res) => {
