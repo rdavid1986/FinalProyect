@@ -26,7 +26,7 @@ export const addCart = async (req, res) => {
         res.status(500).send({ status: "error", error: `${error.name}: ${error.cause},${error.message},${error.code}` });
     }
 };
-//Get al carts
+//Get al carts 
 export const getCarts = async (req, res) => {
     try {
         const carts = await cartsManager.get();
@@ -44,7 +44,7 @@ export const getCarts = async (req, res) => {
         res.status(500).send({ status: "error", error: `${error.name}: ${error.cause},${error.message},${error.code}` });
     }
 };
-//Route to get a cart by id
+//Route get a cart by id
 export const getCartById = async (req, res) => {
     try {
         const cid = req.params.cid;
