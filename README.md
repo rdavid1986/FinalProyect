@@ -34,12 +34,12 @@ This is a Node.js and Express.js-based API for a CoderHouse Ecommerce applicatio
  
 Install dependencies:
 
-bash
+
 Copy code
 npm install
 Start the server:
 
-bash
+
 Copy code
 npm start
 Visit http://localhost:8080 in your browser.
