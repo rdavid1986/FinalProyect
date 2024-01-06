@@ -35,27 +35,14 @@ This is a Node.js and Express.js-based API for a CoderHouse Ecommerce applicatio
 Install dependencies:
 
 
-Copy code
+
 npm install
-Start the server:
+Start the server
 
-
-Copy code
 npm start
+
 Visit http://localhost:8080 in your browser.
 
-Configure MongoDB
-Make sure to configure your MongoDB connection by updating the config.js file with your MongoDB URL:
-
-javascript
-Copy code
-// File: config/config.js
-
-export default {
-    port: 8080,
-    mongoUrl: "your-mongodb-url",
-    // ... other configurations
-};
 API Documentation
 Explore the API endpoints and documentation at http://localhost:8080/api/docs using Swagger UI.
 
