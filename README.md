@@ -12,6 +12,7 @@ npm start
 
 ```
 
+
 # CoderHouse Ecommerce API
 
 This is a Node.js and Express.js-based API for a CoderHouse Ecommerce application. It includes features such as product management, user authentication, shopping carts, and a real-time chat system using Socket.io.

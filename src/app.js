@@ -29,7 +29,7 @@ import swaggerUiExpress from "swagger-ui-express";
 
 const app = express();
 
-const PORT = config.port
+const PORT = config.port || 8080;
 const mongoURL = config.mongoUrl
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);

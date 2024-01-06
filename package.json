@@ -1,11 +1,11 @@
 {
-  "name": "secondchallenge",
+  "name": "finalproyect",
   "version": "1.0.0",
   "main": "./src/app.js",
   "type": "module",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon ./src/app.js"
+    "dev": "nodemon src/app.js",
+    "start": "node src/app.js"
   },
   "keywords": [],
   "author": "",
