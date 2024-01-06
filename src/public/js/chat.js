@@ -2,16 +2,15 @@ const socket = io();
 
 //Chat
 Swal.fire({
-    title: "Identificate",
+    title: "Identify yourself",
     input: "text",
-    text: "Ingresa tu usuario",
+    text: "Enter your username",
     inputValidator: (value) => {
-        return !value && 'necesitas escribir un nombre';
+        return !value && 'You need to type in a name';
     },
     allowOutsideClick: false,
 }).then(result => {
     user_name = result.value;
-    
 })
 chatBox.addEventListener("keyup", evt => {
     if (evt.key === "Enter") {

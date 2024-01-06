@@ -7,7 +7,7 @@ export const getMessages = async (req, res) => {
         let messages = await messageManager.get();
         res.send({status: 'success', payload: messages});
     } catch (error) {
-        req.logger.error(`Controller messages line 10 ${error.message}, ${error.code}`);
+        req.logger.error(`Controller messages getMessages ${error.message}, ${error.code}`);
         res.status(500).send({ status: "error", error: `${error.name}: ${error.cause},${error.message},${error.code}` });
     }
    
@@ -18,7 +18,7 @@ export const addMessages = async (req, res) => {
         return res.send({status: "success", payload:messages});
     
     } catch (error) {
-        req.logger.error(`Controller messages line 21 ${error.message}, ${error.code}`);
+        req.logger.error(`Controller messages addMessages ${error.message}, ${error.code}`);
         res.status(500).send({ status: "error", error: `${error.name}: ${error.cause},${error.message},${error.code}` });
     }
 }

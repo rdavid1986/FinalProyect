@@ -1,6 +1,5 @@
 const socket = io();
 
-/* socket.emit('message', '-------------- welcome --------------'); */
 
 socket.on('event_socket', data => {
     socket.emit(data);

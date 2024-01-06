@@ -45,7 +45,7 @@ const userSchema = new mongoose.Schema({
     recoverToken: String,
 })
 userSchema.pre("find", function (next) {
-    this.populate("cart._id");
+    this.populate("cart");
     next();
 });
 

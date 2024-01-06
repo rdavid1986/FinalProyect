@@ -23,7 +23,6 @@ form.addEventListener("submit", async (evt) => {
                 title: "Mail send to recover password",
                 showConfirmButton: false,
             })
-            
         }
     } catch (error) {
         console.log(error);

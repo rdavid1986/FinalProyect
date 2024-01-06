@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Purchase Confirmation</title>
+</head>
+<body>
+    <h1>Congratulations Purchase Completed</h1>
+    <p>This is the list of products you bought:</p>
+    <ul>
+        {{#each payload.products}}
+            <li>{{this}}</li>
+        {{/each}}
+    </ul>
+    <p>Total Amount: ${{payload.amount}}</p>
+    <br>
+    <div>
+        <a href="/api/session/logout">
+            <button id="logout_button">Logout</button>
+        </a>
+        
+        <a href="/products">
+            <button class="button">Shop</button>
+        </a>
+    </div>
+</body>
+</html> 

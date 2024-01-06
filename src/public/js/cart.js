@@ -1,11 +1,9 @@
 const deleteCart = document.getElementById('delete_cart');
-/* const buyButton = document.getElementById('buyButton'); */
+const delete_product_cart = document.getElementsByClassName('delete_product_cart');
 const cid = deleteCart.getAttribute('data-cid');
-console.log("cid",cid)
 
 deleteCart.addEventListener('click', async (evt) => {
     evt.preventDefault();
-
     try {
         const response = await fetch(`/api/carts/${cid}`, {
             method: 'DELETE',
@@ -37,7 +35,38 @@ deleteCart.addEventListener('click', async (evt) => {
         console.error(error);
     }
 });
-/* buyButton.addEventListener('click', async (evt)=> {
-   evt.preventDefault()
-   window.location.reload();
-}) */
+for (const button of delete_product_cart) {
+    button.addEventListener('click', async (evt) => {
+        evt.preventDefault();
+        const pid = button.getAttribute('data-pid');
+        try {
+            const response = await fetch(`/api/carts/${cid}/products/${pid}`, {
+                method: 'DELETE',
+            });
+            if (response.status === 200) {
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Product delete from cart',
+                    showConfirmButton: false,
+                })
+                setTimeout(function () {
+                    window.location.reload();
+                }, 1300);
+            } else {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'Error deleting cart',
+                })
+                setTimeout(function () {
+                    window.location.replace('/');
+                }, 1300);
+                
+                const responseData = await response.json();
+                console.error(responseData.error);
+            }
+        } catch (error) {
+            console.error(error);
+        }
+    });
+}

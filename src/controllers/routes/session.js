@@ -130,7 +130,6 @@ export const current = async (req, res) => {
                 premium: req.user.premium,
                 _id: req.user._id,
             }
-            console.log(req.session.user._id)
             res.status(200).send({ status: "success", payload: req.session.user })
         } else {
             req.logger.warn("You are not logged in");

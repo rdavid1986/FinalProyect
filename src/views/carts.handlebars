@@ -28,13 +28,17 @@
         <br>
         <strong>quantity:</strong> {{quantity}}
         <br>
+        <br>
+        <button id="delete_product_cart" class="delete_product_cart" 
+        data-cid2="{{cart}}" 
+        data-pid="{{lookup _id "_id"}}">Delete product in cart</button>
       </li>
     {{/each}}
   </ul>
 {{else}}
   <p class="ul__productsList">Cart is empty.</p>
 {{/if}}
-  <a href=""><button id="delete_cart" class="delete_cart" data-cid="{{cart}}">Delete cart</button></a>
+  <button id="delete_cart" class="delete_cart" data-cid="{{cart}}">Delete cart</button>
   <a href="/api/carts/{{cart}}/purchase"><button id="buyButton" class="buyButton" >Purchase</button></a>
 <script src="/js/cart.js"></script>
 <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>

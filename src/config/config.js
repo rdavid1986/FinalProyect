@@ -11,5 +11,6 @@ export default {
     persistence: process.env.PERSISTENCE,
     loggerEnv: process.env.LOGGER_ENVIRONMENT,
     privateKey: process.env.PRIVATE_KEY,
-    transportUser: process.env.TRANSPORT_USER
+    transportUser: process.env.TRANSPORT_USER,
+    mailerPass: process.env.MAILER_PASS
 };

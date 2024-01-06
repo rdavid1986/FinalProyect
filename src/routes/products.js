@@ -12,11 +12,11 @@ import {
     userAccess,
     premiumAccess
 } from "../middleware/auth.js"
-
+import {uploader} from "../utils.js";
 const router = new Router();
 
 router.get("/", getProducts);
-router.post('/', addProduct)
+router.post('/' , uploader.array('thumbnail') , addProduct)
 router.get('/', paginateProducts);
 router.get('/:pid', getProductsById);
 router.put("/:pid", updateProduct);

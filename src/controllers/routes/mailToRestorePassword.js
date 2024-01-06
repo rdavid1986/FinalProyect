@@ -9,15 +9,14 @@ const transport = nodemailer.createTransport({
     port: 587,
     secure: false,
     auth: {
-        user: "r.david1923@gmail.com",
-        pass: "liyg weqi dpux duuu"
+        user: config.transportUser,
+        pass: config.mailerPass
     }
 });
 
 export const mailToRestorePassword = async (req, res) => {
     try {
         const { email } = req.body;
-    
         const user = await userModel.findOne({ email });
         if (user) {
             const token = jwt.sign({ email }, config.privateKey, { expiresIn: "10m" });
@@ -48,7 +47,7 @@ export const mailToRestorePassword = async (req, res) => {
             res.status(400).send({ status: "error", error: "invalid email" });
         }
     } catch (error) {
-        req.logger.error(`Controller mailToRestorePassword line 55 ${error.message}, ${error.code}`);
+        req.logger.error(`Controller mailToRestorePassword ${error.message}, ${error.code}`);
         res.status(500).send({ status: "error", error: `${error.name}: ${error.cause},${error.message},${error.code}` });
     }
 }

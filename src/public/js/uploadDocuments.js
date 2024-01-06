@@ -17,7 +17,6 @@ document.addEventListener("DOMContentLoaded", function() {
                     title: 'Load documents successfull',
                     showConfirmButton: false,
                 })
-                console.log("Documentos enviados exitosamente.");
             } else {
                 Swal.fire({
                     icon: 'error',
@@ -27,7 +26,6 @@ document.addEventListener("DOMContentLoaded", function() {
                 console.error("Error al enviar documentos:", response.statusText);
             }
         } catch (error) {
-            // Manejar errores de red o solicitud (opcional)
             console.error("Error de red:", error);
         }
     });

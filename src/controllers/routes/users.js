@@ -1,5 +1,16 @@
 import { userModel } from "../../models/user.js";
+import config from "../../config/config.js";
+import nodemailer from "nodemailer";
 
+const transport = nodemailer.createTransport({
+    service: "gmail",
+    port: 587,
+    secure: false,
+    auth: {
+        user: config.transportUser,
+        pass: "liyg weqi dpux duuu"
+    }
+});
 export const userPremium = async (req, res) => {
     try {
         const email = req.user.email;
@@ -37,11 +48,10 @@ export const userPremium = async (req, res) => {
             }
         }
     } catch (error) {
-        req.logger.error(`Controller session line 63 ${error.message}, ${error.code}`);
+        req.logger.error(`Controller session userPremium ${error.message}, ${error.code}`);
         res.status(500).send({ status: "error", error: `${error.name}: ${error.cause},${error.message},${error.code}` });
     }
 };
-
 export const uploadDocuments = async (req, res) => {
     try {
         const userId = req.params.uid;
@@ -50,7 +60,6 @@ export const uploadDocuments = async (req, res) => {
         if (!files || files.length === 0) {
             return res.status(400).send({ status: "error", error: "No documents uploaded" });
         }
-
         const documentReferences = files.map((file, index) => {
             let name;
             switch (index) {
@@ -66,26 +75,127 @@ export const uploadDocuments = async (req, res) => {
                 default:
                     name = `File_${index + 1}`;
             }
-
             return {
                 name,
                 reference: `/public/documents/${file.originalname}`
             };
         });
-
         const hasAllDocuments = documentReferences.length === 3;
-
         if (hasAllDocuments) {
             await userModel.findByIdAndUpdate(userId, {
                 $push: { documents: { $each: documentReferences } },
                 $set: { status: true }
             });
         }
-
         res.status(200).send({ status: "success", message: "Documents uploaded successfully" });
     } catch (error) {
-        console.error(error);
+        req.logger.error(`Controller session uploadDocuments ${error.message}, ${error.code}`);
         res.status(500).send({ status: "error", error: "Internal server error" });
+    }
+};
+export const getUser = async (req, res) => {
+    try {
+        const { userEmail } = req.body;
+        const user = await userModel.findOne({ email: userEmail });
+        if(!user) {
+            res.status(404).json({ error: 'Error, the user doesnt exist' });
+        }else {
+            const formattedUsers ={
+                first_name: user.first_name,
+                last_name: user.last_name,
+                email: user.email,
+                role: user.role,
+            };
+            req.logger.error(`Controller session getUser ${error.message}, ${error.code}`);
+            res.status(200).json(formattedUsers);
+        }
+    } catch (error) {
+        console.error('Error al obtener usuarios:', error);
+        res.status(500).json({ error: 'Error al obtener usuarios' });
+    }
+};
+export const getUsers = async (req, res) => {
+    try {
+        const users = await userModel.find({}).populate("cart");
+        const formattedUsers = users.map(user => ({
+            first_name: user.first_name,
+            last_name: user.last_name,
+            email: user.email,
+            role: user.role,
+        }));
+
+        console.log(formattedUsers);
+        res.status(200).json(formattedUsers);
+    } catch (error) {
+        req.logger.error(`Controller session getUsers ${error.message}, ${error.code}`);
+        res.status(500).json({ error: 'Error al obtener usuarios' });
+    }
+};
+export const deleteUsers = async (req, res) => {
+    try {
+        const users = await userModel.find({}).populate("cart");
+
+        const currentDate = new Date();
+        const dateToDeleteUser = new Date(currentDate - 2 * 24 * 60 * 60 * 1000); //Two days ago
+        /* const dateToDeleteUser = new Date(currentDate - 1 * 60 * 1000); */ // One minute ago
+
+
+        const usersToDelete = users.filter(user => new Date(user.last_connection) < dateToDeleteUser);
+
+        for (const user of usersToDelete) {
+            
+            let result = await transport.sendMail({
+                from: "eccommercer coder proyect<r.david1923@gmail.com>",
+                to: user.email,
+                subject: "Eccommercer your acount has be deleted",
+                html: `
+                    <h1>Your acount has be deleted</h1>
+                    <p>Due to the long inactivity of your account, it has been deleted.</p>
+                    <p>Thanks for using our app</p>
+                    `
+            });
+           
+            await userModel.deleteOne({ _id: user._id });
+        }
+
+        req.logger.error(`Controller session deleteUsers ${error.message}, ${error.code}`);
+        
+        res.status(200).json({ message: 'delete inactivity user success', payload: { users: usersToDelete.email } });
+    } catch (error) {
+        console.error('Error to delete user:', error);
+        res.status(500).json({ error: 'Error to delete user with last connection time expired' });
+    }
+};
+export const changeRole = async (req, res) => {
+    try {
+        const { userEmailRole } = req.body;
+        console.log("this is an email", userEmailRole);
+        const user = await userModel.findOne({ email: userEmailRole });
+        if (user) {
+            if (user.role === 'user') {
+                await userModel.updateOne({ email: userEmailRole }, { $set: { role: "admin" } });
+                res.status(200).send({status: "success",message: "user role change to admin success"})
+            } else if (user.role === 'admin') {
+                await userModel.updateOne({ email: userEmailRole }, { $set: { role: "user" } });
+                res.status(200).send({status: "success",message: "user role change to user success"})
+            }
+        } else {
+            res.render("adminview", { status: "error", message: "User not found" });
+        }
+    } catch (error) {
+        req.logger.error(`Controller session changeRole ${error.message}, ${error.code}`);
+        res.render("adminview", { status: "error", error: 'Error to get user' });
+    }
+};
+export const deleteUser = async (req, res) => {
+    try {
+        const { deleteUserEmail } = req.body;
+        console.log("this is user delete email " ,deleteUserEmail);
+        await userModel.deleteOne({ email: deleteUserEmail });
+        res.status(200).send({ status: "success", message: "Delete user successfully" });
+    } catch (error) {
+        req.logger.error(`Controller session deleteUser ${error.message}, ${error.code}`);
+        res.status(500).json({ error: 'Error al obtener usuarios' });
     }
 };
 

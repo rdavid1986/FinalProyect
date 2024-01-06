@@ -13,7 +13,7 @@ const transport = nodemailer.createTransport({
     port: 587,
     auth: {
         user: config.transportUser,
-        pass: "liyg weqi dpux duuu"
+        pass: config.mailerPass
     }
 });
 //Route to create a new cart
@@ -22,7 +22,7 @@ export const addCart = async (req, res) => {
         const newCart = await cartsManager.add();
         res.send({ status: "success cart added", payload: newCart })
     } catch (error) {
-        req.logger.error(`Controller cart line 25 ${error.message}, ${error.code}`);
+        req.logger.error(`Controller cart addCart ${error.message}, ${error.code}`);
         res.status(500).send({ status: "error", error: `${error.name}: ${error.cause},${error.message},${error.code}` });
     }
 };
@@ -40,7 +40,7 @@ export const getCarts = async (req, res) => {
         }
         res.status(200).send(carts);
     } catch (error) {
-        req.logger.error(`Controller cart line 43 ${error.message}, ${error.code}`);
+        req.logger.error(`Controller cart getCarts ${error.message}, ${error.code}`);
         res.status(500).send({ status: "error", error: `${error.name}: ${error.cause},${error.message},${error.code}` });
     }
 };
@@ -61,39 +61,36 @@ export const getCartById = async (req, res) => {
             res.status(200).send(cart);
         }
     } catch (error) {
-        req.logger.error(`Controller carts line 64 ${error.message}, ${error.code}`);
+        req.logger.error(`Controller carts getCartById ${error.message}, ${error.code}`);
         res.status(500).send({ status: "error", error: `${error.name}: ${error.cause},${error.message},${error.code}` });
     }
 };
 export const addProductToCart = async (req, res) => {
     try {
-        const cid = req.params.cid ;
-        const pid = req.params.pid ;
+        const cid = req.params.cid;
+        const pid = req.params.pid;
         const user = req.session.user || req.body.user;
-
+        
         const product = await productManager.getById(pid);
         const cart = await cartsManager.getById(cid);
 
         if (!product) {
             return res.status(404).send({ status: 'error', message: `The product with ID ${pid} doesn't exist` });
         }
-
         if (!cart) {
             return res.status(404).send({ status: 'error', message: `The cart with ID ${cid} doesn't exist` });
         }
-
-        if (user.premium === "true" && product.owner === user._id) {
+        if (user.premium === true && product.owner === user._id) {
             return res.status(401).send({ status: "error", message: "You can't add your own product to your cart" });
+        }
+        if (user.role === "admin") {
+            return res.status(401).send({ status: "error", message: "You can't add a product to if you are admin" });
         }
 
         const addProduct = await cartsManager.addToCart(cid, pid);
-        return res.status(200).send({
-            status: "success",
-            message: 'Product successfully added to the cart',
-            payload: addProduct
-        });
+        return res.status(200).send({status: "success", message: 'Product successfully added to cart', payload: addProduct});
     } catch (error) {
-        req.logger.error(`Controller cart line 92 ${error.message}, ${error.code}`);
+        req.logger.error(`Controller cart addProductToCart ${error.message}, ${error.code}`);
         return res.status(500).send({
             status: "error",
             error: `${error.name}: ${error.cause},${error.message},${error.code}`
@@ -107,7 +104,7 @@ export const deleteProducts = async (req, res) => {
         const deleteCart = await cartsManager.deleteProducts(cid);
         return res.status(200).send({ status: "success ", payload: deleteCart });
     } catch (error) {
-        req.logger.error(`Controller carts line 105 ${error.message}, ${error.code}`);
+        req.logger.error(`Controller carts deleteProducts ${error.message}, ${error.code}`);
         res.status(500).send({ status: "error", error: `${error.name}: ${error.cause},${error.message},${error.code}` });
     }
 };
@@ -117,17 +114,12 @@ export const deleteProductFromCart = async (req, res) => {
         const cid = req.params.cid || req.body.cid;
         const pid = req.params.pid || req.body.pid;
         const user = req.session.user || req.body.user;
-        if (user.premiun === "true") {
-            if (product.owner === user._id) {
-                await cartsManager.deleteFromCart(cid, pid);
-                return res.status(200).send({ status: "success", message: "Product delete fron this cart"});
-            }
-            return;
-        }
+        
         await cartsManager.deleteFromCart(cid, pid);
-        return res.status(200).send({ status: "success", message: "Product delete fron this cart"  });
+        return res.status(200).send({ status: "success", message: "Product delete fron this cart" });
+        
     } catch (error) {
-        req.logger.error(`Controller carts line 125 ${error.message}, ${error.code}`);
+        req.logger.error(`Controller carts deleteProductFromCart ${error.message}, ${error.code}`);
         res.status(500).send({ status: "error", error: `${error.name}: ${error.cause},${error.message},${error.code}` });
     }
 };
@@ -154,61 +146,73 @@ export const purchase = async (req, res) => {
 
 
         const products = cart.products;
-        const productsToPurchase = [];
-        const productsNotPurchased = [];
-        let totalPricePurchase = 0;
-        for (let product of products) {
-            const productInfo = await productManager.getById(product._id);
+        if (cart.products.length > 0) {
+            const productsToPurchase = [];
+            const productsNotPurchased = [];
+            let totalPricePurchase = 0;
+            for (let product of products) {
+                const productInfo = await productManager.getById(product._id);
 
-            if (productInfo.stock >= product.quantity) {
-                const updatedStock = productInfo.stock - product.quantity;
-                if (updatedStock <= 0) {
-                    updatedStock = 0
-                    //update stock
-                    await productManager.update(product._id._id, { stock: updatedStock });
+                if (productInfo.stock >= product.quantity) {
+                    const updatedStock = productInfo.stock - product.quantity;
+                    if (updatedStock <= 0) {
+                        updatedStock = 0
+                        //update stock
+                        await productManager.update(product._id._id, { stock: updatedStock });
+                    } else {
+                        //update stock
+                        await productManager.update(product._id._id, { stock: updatedStock });
+                    }
+                    //delete product from cart
+                    await cartsManager.deleteFromCart(cid, product._id._id);
+                    const totalPrice = product._id.price * product.quantity
+                    productsToPurchase.push(` ${product._id.title} x ${product.quantity} = ${totalPrice} `);
+                    totalPricePurchase += totalPrice
                 } else {
-                    //update stock
-                    await productManager.update(product._id._id, { stock: updatedStock });
+                    productsNotPurchased.push(`${product._id.title} x ${product.quantity}`);
                 }
-                //delete product from cart
-                await cartsManager.deleteFromCart(cid, product._id._id);
-                const totalPrice = product._id.price * product.quantity
-                productsToPurchase.push(`${product._id.title} x ${product.quantity} = ${totalPrice}`);
-                totalPricePurchase += totalPrice
-            } else {
-                productsNotPurchased.push(`${product._id.title} x ${product.quantity}`);
             }
+            const ticket = {
+                code: Date.now().toString().replace(/\D/g, '') + Math.random().toString().slice(2, 8),
+                products: productsToPurchase,
+                amount: totalPricePurchase,
+                purchaser: mail
+            }
+            console.log("ticket", ticket);
+
+            ticketModel.create(ticket)
+            delete ticket.code
+            setTimeout(function () {
+                res.status(200).render('purchase',
+                    { payload: ticket, style: "purchase.css" }
+                );
+            }, 1300);
+            try {
+    
+                let result = await transport.sendMail({
+                    from: "eccommercer coder proyect<r.david1923@gmail.com>",
+                    to: mail,
+                    subject: "Eccommercer buy",
+                    html: `
+                    <h1>Thanks for your purchase</h1>
+                    <p>This is the list of products you bought</p>
+                    ${productsToPurchase}<br>
+                    <p>total $ ${totalPricePurchase}</p>
+                    `
+                })
+                req.logger.info("mail sending success");
+            } catch (error) {
+                req.logger.error("error sending nodemailer", error);
+    
+            }
+        }else{
+            res.status(400).render('errorPurchase',
+                    { payload: `You can't check out if your cart is empty`, style: "purchase.css" }
+                );
         }
-        const ticket = {
-            code: Date.now().toString().replace(/\D/g, '') + Math.random().toString().slice(2, 8),
-            amount: totalPricePurchase,
-            purchaser: mail
-        }
-        console.log("ticket", ticket);
 
-        ticketModel.create(ticket)
-
-        res.status(200).send({ status: "succes", payload: productsToPurchase, totalPricePurchase, productsNotPurchased });
-        try {
-
-            let result = await transport.sendMail({
-                from: "eccommercer coder proyect<r.david1923@gmail.com>",
-                to: mail,
-                subject: "Eccommercer buy",
-                html: `
-                <h1>Thanks for your purchase</h1>
-                <p>This is the list of products you bought</p>
-                ${productsToPurchase}
-                <p>total $ ${totalPricePurchase}</p>
-                `
-            })
-            req.logger.info("mail sending success");
-        } catch (error) {
-            req.logger.error("error sending nodemailer", error);
-
-        }
     } catch (error) {
-        req.logger.error(`Controller carts line 208 ${error.message}, ${error.code}`);
+        req.logger.error(`Controller carts updateQuantityProductInCart ${error.message}, ${error.code}`);
         res.status(500).send({ status: "error", error: `${error.name}: ${error.cause},${error.message},${error.code}` });
     }
 

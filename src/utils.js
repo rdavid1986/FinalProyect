@@ -53,18 +53,4 @@ const storage = multer.diskStorage({
 });
 export const uploader = multer({storage});
 
-
-/* const productStorage = multer.diskStorage({
-    destination: function (req, file, cb) {
-        cb(null, '__dirname + public/products/');
-    },
-    filename: function (req, file, cb) {
-        const ext = file.originalname.split('.').pop();
-        cb(null, 'thumbnail-' + Date.now() + '.' + ext);
-    },
-});
-
-export const uploadProduct = multer({ storage: productStorage }); */
-
-
 export default __dirname;

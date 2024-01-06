@@ -1,0 +1,25 @@
+<div class="adminview">Admin view</div>
+<p>Enter a user's email to change the role "user" to "admin" or "admin" to "user"</p>
+<form action="/api/users/getuser" id="getUserForm" method="get">
+    <label for="userId">Enter User email:</label>
+    <input type="text" id="userEmail" name="userEmail" required>
+    <button type="submit">Get user</button>
+</form>
+<br />
+<div id="userInfoContainer"></div>
+<br />
+<form action="/api/users/changeRole" id="changeRoleForm" method="POST">
+    <label for="userId">Enter User email to change role:</label>
+    <input type="text" id="userEmailRole" name="userEmailRole" required>
+    <button type="submit">Change role</button>
+</form>
+<br />
+<form action="/api/users/deleteuser" id="deleteUserForm" method="DELETE">
+    <label for="userId">Enter User email to delete user:</label>
+    <input type="text" id="deleteUserEmail" name="deleteUserEmail" required>
+    <button type="submit">delete</button>
+</form>
+
+
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="/js/adminView.js"></script>

@@ -2,20 +2,9 @@ import { Router } from 'express';
 
 const router = Router();
 
-import  {
-    addCart,
-    getCarts,
-    getCartById,
-    addProductToCart,
-    deleteProductFromCart,
-    deleteProducts,
-    updateQuantityProductInCart,
-    purchase
-} from "../controllers/routes/cart.js";
-import {
-    adminAccess,
-    userAccess
-}from "../middleware/auth.js"
+import  {addCart,getCarts,getCartById,addProductToCart,deleteProductFromCart,deleteProducts,updateQuantityProductInCart,purchase} from "../controllers/routes/cart.js";
+import {adminAccess,userAccess}from "../middleware/auth.js"
+
 router.post("/", addCart);
 router.get("/", getCarts);
 router.get("/:cid", getCartById);

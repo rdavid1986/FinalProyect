@@ -47,7 +47,7 @@ export const products = async (req, res) => {
             cart: req.session.user.cart,
         });
     } catch (error) {
-        req.logger.error(`Controller views line 50 ${error.message}, ${error.code}`);
+        req.logger.error(`Controller views products ${error.message}, ${error.code}`);
         res.status(500).send({ status: "error", error: `${error.name}: ${error.cause},${error.message},${error.code}` });
     }
     
@@ -104,3 +104,7 @@ export const recoverView = (req, res) => {
 export const restorePassword = (req, res) => {
     res.render('restorePassword', { style: "restorePassword.css" });
 }
+export const adminview = (req, res) => {
+    res.render("adminview"/* , { style: "realTimeProducts.css" } */);
+};
+

@@ -10,7 +10,7 @@ export default class ProductDTO {
         this.price = product.price > 0 ? product.price : 0,
         this.category = product.category,
         this.active = true;
-        this.owner = user.premium === "true" ? user._id : "admin";
+        this.owner = user.premium === true ? user._id : "admin";
     }
     
 }

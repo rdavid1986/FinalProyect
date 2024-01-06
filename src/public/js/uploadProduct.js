@@ -10,7 +10,7 @@ document.addEventListener("DOMContentLoaded", function () {
         try {
             const response = await fetch(`/api/users/${userId}/product`, {
                 method: 'POST',
-                body: formData,  // No es necesario especificar el tipo de contenido
+                body: formData, 
             });
 
             if (response.ok) {

@@ -12,6 +12,9 @@ const ticketSchema = mongoose.Schema({
         type: Date,
         default: Date.now()
     },
+    products: {
+        type: []
+    },
     amount: {
         type: Number,
         required: true

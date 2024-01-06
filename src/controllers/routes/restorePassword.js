@@ -37,6 +37,6 @@ export const restorePassword = async (req, res) => {
             console.error("Error:", error);
             res.status(500).send({ status: "error", error: "Internal Server Error" });
         }
-        req.logger.error(`Controller restorePassword line 48 ${error.message}, ${error.code}`);
+        req.logger.error(`Controller restorePassword ${error.message}, ${error.code}`);
     }
 };

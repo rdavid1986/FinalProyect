@@ -1,11 +1,24 @@
 import ProductManager from "../../dao/mongo/productManager.js";
 import { productsModel } from "../../models/product.js";
+import { userModel } from "../../models/user.js";
 import productsDTO from "../../dao/DTOs/products.js";
 import { generateProductErrorInfo } from "../../services/errors/info.js";
 import CustomError from "../../services/errors/CustomError.js";
 import EErrors from "../../services/errors/enums.js";
 import path from "path";
 import __dirname from "../../utils.js"
+import config from "../../config/config.js";
+import nodemailer from "nodemailer";
+
+const transport = nodemailer.createTransport({
+    service: "gmail",
+    port: 587,
+    secure: false,
+    auth: {
+        user: config.transportUser,
+        pass: "liyg weqi dpux duuu"
+    }
+});
 //We create the instance of the class
 const productManager = new ProductManager();
 //Get products /api/products
@@ -14,7 +27,7 @@ export const getProducts = async (req, res) => {
         let products = await productManager.get();
         res.status(200).send({ status: "success", payload: products })
     } catch (error) {
-        req.logger.error(`Controller products line 16 ${error.message}, ${error.code}`);
+        req.logger.error(`Controller products getProducts ${error.message}, ${error.code}`);
         res.status(500).send({ status: "error", error: `${error.name}: ${error.cause},${error.message},${error.code}` });
     }
 };
@@ -34,17 +47,17 @@ export const addProduct = async (req, res) => {
             console.log("esto se envio", req.body);
 
             let { title, description, category, code, price, stock, thumbnail } = req.body;
-            
+
             if (typeof price === "string" && typeof stock === "string") {
-                price = +price; 
+                price = +price;
                 stock = +stock;
             }
             if (req.files) {
                 thumbnail = req.files.map((file) => {
-                  return path.join(__dirname, '/public/products/', file.filename);
+                    return path.join(__dirname, '/public/products/', file.filename);
                 });
             }
-            console.log("asi quedo ",title, description, category, code, price, stock, thumbnail);
+            console.log("asi quedo ", title, description, category, code, price, stock, thumbnail);
 
             if (!title || !description || !category || !code || !price || !stock || !thumbnail) {
                 CustomError.createError({
@@ -61,7 +74,7 @@ export const addProduct = async (req, res) => {
             return res.status(200).send({ status: "success", payload: productAdded });
         }
     } catch (error) {
-        req.logger.error(`controller products line 46  ${error.message}, ${error.code}`);
+        req.logger.error(`controller products addProduct  ${error.message}, ${error.code}`);
         return res.status(500).send({ status: "error", error: ` ${error.name}: ${error.cause},${error.message},${error.code}` });
     }
 };
@@ -77,7 +90,7 @@ export const getProductsById = async (req, res) => {
             res.send(`Error  404 : products not found with id : ${id}`);
         }
     } catch (error) {
-        req.logger.error(`Controller products line 54 ${error.message}, ${error.code}`);
+        req.logger.error(`Controller products getProductsById ${error.message}, ${error.code}`);
         res.status(500).send({ status: "error", error: `${error.name}: ${error.cause},${error.message},${error.code}` });
     }
 };
@@ -90,41 +103,43 @@ export const updateProduct = async (req, res) => {
         const result = await productManager.update(id, updateProduct);
         return res.send(result);
     } catch (error) {
-        req.logger.error(`Controller products line 70 ${error.message}, ${error.code}`);
+        req.logger.error(`Controller products updateProduct ${error.message}, ${error.code}`);
         res.status(500).send({ status: "error", error: `${error.name}: ${error.cause},${error.message},${error.code}` });
     }
 };
-
 //delete product /api/products/pid
 export const deleteProduct = async (req, res) => {
     try {
-        const id = req.params.pid;
+        const pid = req.params.pid;
         const user = req.session.user;
-        const mockUser =  req.body.user;
-        const premium = mockUser.premium || user.premium;
-        const userId = mockUser._id || user._id;
-        if (premium === "true") {
-            const products = await productsModel.find();
+        const mockUser = req.body.user;
 
-            const userProducts = products.filter(product => product.owner === userId);
-            const productToDelete = userProducts.find(product => product._id.toString() === id);
+        const product = await productManager.getById(pid);
+        console.log("product by id title",product.title);
+        if(product.owner){
+            const productOwner = await userModel.findOne({ _id: product.owner });
+            console.log("this is user owneer",productOwner.email)
 
-            if (productToDelete) {
-                await productManager.delete(productToDelete._id.toString());
-                res.status(200).send({ status: "success", message: "product deleted" });
-            } else if (!productToDelete) {
-                res.status(200).send({ error: "error", message: "Product with that id dosnt exist" });
-            }
-        } else {
-            await productManager.delete(id);
+            let result = await transport.sendMail({
+                from: "eccommercer coder proyect<r.david1923@gmail.com>",
+                to: productOwner.email,
+                subject: "Eccommercer message",
+                html: `
+                        <h1>Your product ${product.title} has been deleted</h1>
+                        <p>Thanks for using our app</p>
+                        `
+            });
+            await productManager.delete(pid);
             res.status(200).send({ status: "success", message: "product deleted" });
-        }
+        }else {
+            await productManager.delete(pid);
+            res.status(200).send({ error: "success", message: "product deleted" });
+        } 
 
     } catch (error) {
-        req.logger.error(`controller products line 100  ${error.message}, ${error.code}`);
+        req.logger.error(`controller products deleteProduct  ${error.message}, ${error.code}`);
         return res.send({ status: "error", error: ` ${error.name}: ${error.cause},${error.message},${error.code}` });
     }
-
 }
 //rute /product?limit get limited product list default in 5 products or the amount of you choose
 export const paginateProducts = async (req, res) => {
@@ -133,7 +148,7 @@ export const paginateProducts = async (req, res) => {
         const products = await productsModel.paginate({}, { limit: limit, page: 1 });
         res.status(200).send({ status: "success", payload: products })
     } catch (error) {
-        req.logger.error(`Controller products line 112 ${error.message}, ${error.code}`);
+        req.logger.error(`Controller products paginateProducts ${error.message}, ${error.code}`);
         res.status(500).send({ status: "error", error: `${error.name}: ${error.cause},${error.message},${error.code}` });
     }
 };
