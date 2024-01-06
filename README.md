@@ -30,8 +30,8 @@ This is a Node.js and Express.js-based API for a CoderHouse Ecommerce applicatio
 1. Clone the repository:
 
    ```bash
-   git clone https://github.com/tuusuario/tuproyecto.git
-   cd tuproyecto
+   git clone https://github.com/rdavid1986/FinalProyect
+ 
 Install dependencies:
 
 bash
