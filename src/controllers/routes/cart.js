@@ -144,7 +144,6 @@ export const purchase = async (req, res) => {
 
         if (!cart) return res.status(404).json({ error: 'Cart doesnt exist' });
 
-
         const products = cart.products;
         if (cart.products.length > 0) {
             const productsToPurchase = [];
@@ -178,7 +177,6 @@ export const purchase = async (req, res) => {
                 amount: totalPricePurchase,
                 purchaser: mail
             }
-            console.log("ticket", ticket);
 
             ticketModel.create(ticket)
             delete ticket.code
