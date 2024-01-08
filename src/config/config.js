@@ -12,5 +12,8 @@ export default {
     loggerEnv: process.env.LOGGER_ENVIRONMENT,
     privateKey: process.env.PRIVATE_KEY,
     transportUser: process.env.TRANSPORT_USER,
-    mailerPass: process.env.MAILER_PASS
+    mailerPass: process.env.MAILER_PASS,
+    githubClientID: process.env.GITHUB_CLIENT_ID,
+    githubClientSecret: process.env.GITHUB_CLIENT_SECRET,
+    githubCallbackUrl: process.env.GITHUB_CALLBACK_URL,
 };
