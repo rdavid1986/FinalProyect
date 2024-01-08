@@ -13,27 +13,29 @@ const transport = nodemailer.createTransport({
 });
 export const userPremium = async (req, res) => {
     try {
-        const email = req.user.email;
+        const id = req.params.uid;
+        const user = await userModel.findOne({_id: id});
+        const email = user.email
         const hasRequiredDocuments =
-            req.user.documents &&
-            req.user.documents.length >= 3 &&
-            req.user.documents.some(
+            user.documents &&
+            user.documents.length >= 3 &&
+            user.documents.some(
                 doc =>
                     doc.name === "identification" ||
                     doc.name === "proof_of_Address" ||
                     doc.name === "proof_of_Account_Statement"
             );
-
-        if (req.user.premium === false) {
+        
+        if (user.premium === false) {
             if (hasRequiredDocuments) {
                 await userModel.updateOne({ email }, { $set: { premium: true } });
                 return res.status(200).send({
                     status: "success",
-                    message: "You meet the requirements, upgraded user to premium successfully"
+                    message: "Meet the requirements. Upgraded user to premium user successfully"
                 });
             }
         } else {
-            if (req.user.premium === true) {
+            if (user.premium === true) {
                 await userModel.updateOne({ email }, { $set: { premium: false } });
                 return res.status(200).send({
                     status: "success",
@@ -43,7 +45,7 @@ export const userPremium = async (req, res) => {
                 return res.status(500).send({
                     status: "error",
                     message:
-                        "To be premium, you must upload all the documents: Identification, Proof of Address & Proof of Account Statement in your profile section"
+                        "To be premium, the user must upload all the documents: Identification, Proof of Address & Proof of Account Statement in your profile section"
                 });
             }
         }
@@ -95,23 +97,23 @@ export const uploadDocuments = async (req, res) => {
 };
 export const getUser = async (req, res) => {
     try {
-        const { userEmail } = req.body;
+        const { userEmail } = req.params;
         const user = await userModel.findOne({ email: userEmail });
-        if(!user) {
-            res.status(404).json({ error: 'Error, the user doesnt exist' });
-        }else {
+        if(user) {
             const formattedUsers ={
                 first_name: user.first_name,
                 last_name: user.last_name,
                 email: user.email,
                 role: user.role,
+                _id: user._id
             };
-            req.logger.error(`Controller session getUser ${error.message}, ${error.code}`);
             res.status(200).json(formattedUsers);
+        }else {
+            res.status(404).json({ error: 'Error, the user doesnt exist' });
         }
     } catch (error) {
         console.error('Error al obtener usuarios:', error);
-        res.status(500).json({ error: 'Error al obtener usuarios' });
+        res.status(500).json({ error: 'Error to get user' });
     }
 };
 export const getUsers = async (req, res) => {
@@ -128,7 +130,7 @@ export const getUsers = async (req, res) => {
         res.status(200).json(formattedUsers);
     } catch (error) {
         req.logger.error(`Controller session getUsers ${error.message}, ${error.code}`);
-        res.status(500).json({ error: 'Error al obtener usuarios' });
+        res.status(500).json({ error: 'Error ato get users' });
     }
 };
 export const deleteUsers = async (req, res) => {

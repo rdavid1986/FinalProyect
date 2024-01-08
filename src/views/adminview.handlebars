@@ -1,4 +1,5 @@
-<div class="adminview">Admin view</div>
+<div class="adminview">
+    <p>Admin view</p>
 <p>Enter a user's email to change the role "user" to "admin" or "admin" to "user"</p>
 <form action="/api/users/getuser" id="getUserForm" method="get">
     <label for="userId">Enter User email:</label>
@@ -14,12 +15,18 @@
     <button type="submit">Change role</button>
 </form>
 <br />
+<form id="userPremium" method="POST">
+    <label for="userId">Enter User Id to change premium status:</label>
+    <input type="text" id="userId" name="userId" required>
+    <button type="submit">Upgrade to premium or degrade</button>
+</form>
+<br />
 <form action="/api/users/deleteuser" id="deleteUserForm" method="DELETE">
     <label for="userId">Enter User email to delete user:</label>
     <input type="text" id="deleteUserEmail" name="deleteUserEmail" required>
     <button type="submit">delete</button>
 </form>
 
-
+</div>
 <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script src="/js/adminView.js"></script>

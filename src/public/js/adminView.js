@@ -4,12 +4,12 @@ getUserForm.addEventListener('submit', async (evt) => {
     const userEmail = document.getElementById('userEmail').value;
     console.log(userEmail);
     try {
-        const response = await fetch('/api/users/getuser', {
+        const response = await fetch(`/api/users/getuser/${userEmail}`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({ userEmail: userEmail }),
+            
         });
         if (response.ok) {
             const data = await response.json();
@@ -31,6 +31,10 @@ getUserForm.addEventListener('submit', async (evt) => {
             const roleElement = document.createElement('p');
             roleElement.textContent = `Role: ${data.role}`;
             userInfoContainer.appendChild(roleElement);
+            
+            const userId = document.createElement('p');
+            userId.textContent = `Id: ${data._id}`;
+            userInfoContainer.appendChild(userId);
             
         } else {
             const error = document.createElement('p');
@@ -54,6 +58,33 @@ changeRoleForm.addEventListener('submit', async (evt) => {
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify( { userEmailRole: userEmailRole } ),
+        });
+
+        if (response.ok) {
+            const data = await response.json(); 
+            Swal.fire({
+                icon: 'success',
+                title: data.message,
+                showConfirmButton: false,
+            });
+        } else {
+            console.error('Server error:', response.status, response.statusText);
+        }
+    } catch (error) {
+        console.error('Error during fetch:', error);
+    }
+});
+const userPremium = document.getElementById('userPremium');
+userPremium.addEventListener('submit', async (evt) => {
+    evt.preventDefault(); 
+    const userId = document.getElementById('userId').value;
+    console.log(userId);
+    try {
+        const response = await fetch(`/api/users/premium/${userId}`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+            },
         });
 
         if (response.ok) {

@@ -9,7 +9,7 @@ const router = Router();
 
 router.get("/premium/:uid", userPremium);
 router.get("/get", getUsers);
-router.get("/getuser", getUser);
+router.get("/getuser/:userEmail", getUser);
 router.post("/changeRole",adminAccess, changeRole); //Change user role
 router.delete("/deleteUser",adminAccess, deleteUser); // delete user by email
 router.delete("/delete", deleteUsers); // delete inactivity user

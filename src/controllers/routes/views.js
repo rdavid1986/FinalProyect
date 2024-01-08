@@ -105,6 +105,6 @@ export const restorePassword = (req, res) => {
     res.render('restorePassword', { style: "restorePassword.css" });
 }
 export const adminview = (req, res) => {
-    res.render("adminview"/* , { style: "realTimeProducts.css" } */);
+    res.render("adminview", { style: "adminview.css" });
 };
 
